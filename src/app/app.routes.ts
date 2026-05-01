@@ -10,17 +10,21 @@ import { TrackList } from './components/track-view/track-list.component';
 import { Home } from './pages/home/home';
 import { NotFoundPage } from './pages/not-found';
 import { App } from './app';
+
+import { authGuard } from './guard/auth-guard';
 export const routes: Routes = [
     {
         path: '',
-        component: App // lamding page
+        component: App, // lamding page
     }, 
     {
         path: 'home',
-        component: Home 
+        component: Home ,
+        canActivate: [authGuard]
     },
     {
         path: 'artist',
+        canActivateChild: [authGuard],
         children: [
             {
                 path: '',
@@ -44,14 +48,17 @@ export const routes: Routes = [
     },
     {
         path: 'albums/:id',
+        canActivate: [authGuard],
         component: AlbumnView // Accessible globally, just like track/:id
     },
     {
         path: 'track/:id',
+         canActivate: [authGuard],
         component: TrackView
     },
     {
         path: 'playlists',
+        canActivateChild: [authGuard],
         children: [
             {
                 path: '',
