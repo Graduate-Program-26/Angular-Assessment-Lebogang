@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guard/auth-guard';
+import { authGuard } from './guards/auth-guard';
 
+import { artistResolver } from './resolvers/artists.resolver';
+import { playlistResolver } from './resolvers/playlists.resolver';
+import { albumResolver } from './resolvers/albums.resolver';
 export const routes: Routes = [
     {
         path: '',
@@ -22,6 +25,9 @@ export const routes: Routes = [
             {
                 path: ':id',
                 loadComponent: () => import('./components/artist-view/artist-view.component').then(m => m.ArtistView),
+                resolve: {
+                    artistData : artistResolver
+                },
                 children: [
                     {
                         path: 'albums',
@@ -38,6 +44,9 @@ export const routes: Routes = [
     {
         path: 'albums/:id',
         canActivate: [authGuard],
+        resolve: {
+            albumData: albumResolver
+        },
         loadComponent: () => import('./components/album-view/album-view.component').then(m => m.AlbumnView) // Accessible globally
     },
     {
@@ -48,6 +57,7 @@ export const routes: Routes = [
     {
         path: 'playlists',
         canActivateChild: [authGuard],
+        resolve: playlistResolver,
         children: [
             {
                 path: '',
