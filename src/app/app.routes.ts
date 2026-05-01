@@ -1,25 +1,14 @@
 import { Routes } from '@angular/router';
-import { ArtistView } from './components/artist-view/artist-view.component';
-import { ArtistList } from './components/artist-view/artist-list.component';
-import { PlaylistView } from './components/playlist-view/playlist-view.component';
-import { PlaylistList } from './components/playlist-view/playlist-list.component';
-import { AlbumnView } from './components/album-view/album-view.component';
-import { AlbumList } from './components/album-view/album-list.component';
-import { TrackView } from './components/track-view/track-view.component';
-import { TrackList } from './components/track-view/track-list.component';
-import { Home } from './pages/home/home';
-import { NotFoundPage } from './pages/not-found';
-import { App } from './app';
-
 import { authGuard } from './guard/auth-guard';
+
 export const routes: Routes = [
     {
         path: '',
-        component: App, // lamding page
+        loadComponent: () => import('./app').then(m => m.App), // Landing page
     }, 
     {
         path: 'home',
-        component: Home ,
+        loadComponent: () => import('./pages/home/home').then(m => m.Home),
         canActivate: [authGuard]
     },
     {
@@ -28,19 +17,19 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: ArtistList
+                loadComponent: () => import('./components/artist-view/artist-list.component').then(m => m.ArtistList)
             },
             {
                 path: ':id',
-                component: ArtistView,
+                loadComponent: () => import('./components/artist-view/artist-view.component').then(m => m.ArtistView),
                 children: [
                     {
                         path: 'albums',
-                        component: AlbumList // list of albums for a specific artist
+                        loadComponent: () => import('./components/album-view/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
                     },
                     {
                         path: 'tracks',
-                        component: TrackList // list of tracks for a specific artist
+                        loadComponent: () => import('./components/track-view/track-list.component').then(m => m.TrackList) // list of tracks for a specific artist
                     }
                 ]
             }
@@ -49,12 +38,12 @@ export const routes: Routes = [
     {
         path: 'albums/:id',
         canActivate: [authGuard],
-        component: AlbumnView // Accessible globally, just like track/:id
+        loadComponent: () => import('./components/album-view/album-view.component').then(m => m.AlbumnView) // Accessible globally
     },
     {
         path: 'track/:id',
-         canActivate: [authGuard],
-        component: TrackView
+        canActivate: [authGuard],
+        loadComponent: () => import('./components/track-view/track-view.component').then(m => m.TrackView)
     },
     {
         path: 'playlists',
@@ -62,16 +51,16 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                component: PlaylistList // Renders all user playlists
+                loadComponent: () => import('./components/playlist-view/playlist-list.component').then(m => m.PlaylistList) // Renders all user playlists
             },
             {
                 path: ':id', // Renders a specific playlist
-                component: PlaylistView
+                loadComponent: () => import('./components/playlist-view/playlist-view.component').then(m => m.PlaylistView)
             }
         ]
     },
     {
         path: '**',
-        component: NotFoundPage
+        loadComponent: () => import('./pages/not-found').then(m => m.NotFoundPage)
     }
 ];
