@@ -7,7 +7,19 @@ import { Component } from '@angular/core';
   styleUrl: './home.css',
 })
 export class Home {
+  // headerm + search bar w/ cmmand view 
+  // breadcrumbs
 
 
-  
+  // my playlist, create playlists 
+
+  // albums
+
+  // artists 
+
+
+  // random tracks to play
+
+
+  // random charts
 }
