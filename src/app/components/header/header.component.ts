@@ -96,6 +96,32 @@ import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
                     placeholder="Search Workspace (⌘+K)" />
             </div>
 
+
+            <p-dialog header="Calendar Command Palette" [(visible)]="showCommandPaletteDialog" appendTo="body" [modal]="true" [closable]="true" [style]="{width: '50vw', height: '30vh'}">
+                <p-autocomplete 
+                    #searchQuery
+                    [(ngModel)]="selectedSearchItem" 
+                    [suggestions]="searchSugesstions" 
+                    (completeMethod)="search($event)"
+                    optionLabel="label"
+                    (onSelect)="onSelectSUgesstions($event)"
+                    placeholder="Type a command or search events..."
+                    [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}">
+                    
+                    <ng-template let-item pTemplate="item">
+                        <div class="flex align-items-center justify-content-between w-full">
+                            <div>
+                                <i [className]="'pi ' + item.icon + ' mr-2'"></i>
+                                <span>{{ item.label }}</span>
+                            </div>
+                            <small class="text-secondary" style="font-size: 0.7rem; text-transform: uppercase;">
+                                {{ item.category }}
+                            </small>
+                        </div>
+                    </ng-template>
+                </p-autocomplete>
+            </p-dialog>
         </div>
     `
 })
