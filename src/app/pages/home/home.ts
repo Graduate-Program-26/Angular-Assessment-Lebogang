@@ -1,25 +1,12 @@
 import { Component } from '@angular/core';
-
+import { TopHeader } from '../../components/header/header.component';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [TopHeader, SidebarComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-  // headerm + search bar w/ cmmand view 
-  // breadcrumbs
-
-
-  // my playlist, create playlists 
-
-  // albums
-
-  // artists 
-
-
-  // random tracks to play
-
-
-  // random charts
+  
 }

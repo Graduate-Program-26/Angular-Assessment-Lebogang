@@ -9,7 +9,7 @@ import { FormsModule } from "@angular/forms";
 import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
 
 @Component({
-    selector: 'header',
+    selector: 'header-bar',
     standalone: true,
     imports: [AutoCompleteModule, BreadcrumbModule, FormsModule, RouterModule, DialogModule],
     styles: `
