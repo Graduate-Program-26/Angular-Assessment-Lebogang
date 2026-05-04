@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth-guard';
+import { authGuard } from './core/guards/auth-guard';
 
-import { artistResolver } from './resolvers/artists.resolver';
-import { playlistResolver } from './resolvers/playlists.resolver';
-import { albumResolver } from './resolvers/albums.resolver';
+import { artistResolver } from './features/artist-view/resolvers/artists.resolver'; 
+import { playlistResolver } from './features/playlist-view/resolvers/playlists.resolver'; 
+import { albumResolver } from './features/album-view/resolvers/albums.resolver';
 export const routes: Routes = [
     {
         path: '',
@@ -11,7 +11,7 @@ export const routes: Routes = [
     }, 
     {
         path: 'home',
-        loadComponent: () => import('./pages/home/home').then(m => m.Home),
+        loadComponent: () => import('./features/home/home').then(m => m.Home),
         canActivate: [authGuard]
     },
     {
@@ -20,22 +20,22 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./components/artist-view/artist-list.component').then(m => m.ArtistList)
+                loadComponent: () => import('./features/artist-view/components/artist-list.component').then(m => m.ArtistList)
             },
             {
                 path: ':id',
-                loadComponent: () => import('./components/artist-view/artist-view.component').then(m => m.ArtistView),
+                loadComponent: () => import('./features/artist-view/components/artist-view.component').then(m => m.ArtistView),
                 resolve: {
                     artistData : artistResolver
                 },
                 children: [
                     {
                         path: 'albums',
-                        loadComponent: () => import('./components/album-view/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
+                        loadComponent: () => import('./features/album-view/components/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
                     },
                     {
                         path: 'tracks',
-                        loadComponent: () => import('./components/track-view/track-list.component').then(m => m.TrackList) // list of tracks for a specific artist
+                        loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList) // list of tracks for a specific artist
                     }
                 ]
             }
@@ -47,12 +47,12 @@ export const routes: Routes = [
         resolve: {
             albumData: albumResolver
         },
-        loadComponent: () => import('./components/album-view/album-view.component').then(m => m.AlbumnView) // Accessible globally
+        loadComponent: () => import('./features/album-view/components/album-view.component').then(m => m.AlbumnView) // Accessible globally
     },
     {
         path: 'track/:id',
         canActivate: [authGuard],
-        loadComponent: () => import('./components/track-view/track-view.component').then(m => m.TrackView)
+        loadComponent: () => import('./features/track-view/components/track-view.component').then(m => m.TrackView)
     },
     {
         path: 'playlists',
@@ -61,16 +61,16 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./components/playlist-view/playlist-list.component').then(m => m.PlaylistList) // Renders all user playlists
+                loadComponent: () => import('./features/playlist-view/components/playlist-list.component').then(m => m.PlaylistList) // Renders all user playlists
             },
             {
                 path: ':id', // Renders a specific playlist
-                loadComponent: () => import('./components/playlist-view/playlist-view.component').then(m => m.PlaylistView)
+                loadComponent: () => import('./features/playlist-view/components/playlist-view.component').then(m => m.PlaylistView)
             }
         ]
     },
     {
         path: '**',
-        loadComponent: () => import('./pages/not-found').then(m => m.NotFoundPage)
+        loadComponent: () => import('./pages/not-found.page').then(m => m.NotFoundPage)
     }
 ];
