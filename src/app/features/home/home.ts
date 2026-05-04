@@ -4,9 +4,10 @@ import { SidebarComponent } from '../../shared/components/sidebar/sidebar.compon
 import { PlaylistGrid } from '../playlist-view/components/playlist-grid.component';
 import { ArtistGrid } from '../artist-view/components/artist-grid.component';
 import { AlbumsGrid } from '../album-view/components/album-grid.component';
+import { TracksGrid } from '../track-view/components/track-grid.component';
 @Component({
   selector: 'app-home',
-  imports: [TopHeader, SidebarComponent, PlaylistGrid, ArtistGrid, AlbumsGrid],
+  imports: [TopHeader, SidebarComponent, PlaylistGrid, ArtistGrid, AlbumsGrid, TracksGrid],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

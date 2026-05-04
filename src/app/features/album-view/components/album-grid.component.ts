@@ -1,5 +1,5 @@
 import {Component, signal} from '@angular/core'
-import { MOCK_ALBUMS } from '../mock-data/album.mock';
+import { MOCK_ALBUMS } from '../mock-data/albums.mock';
 import { AlbumnCard } from './album-card.component';
 @Component({
     selector: 'album-grid',

@@ -2,51 +2,39 @@ import { Track } from "../track.model";
 
 export const MOCK_TRACKS: Track[] = [
     {
-        id: 1,
-        title: 'Neon City',
-        link: 'https://example.com/tracks/1',
-        preview: 'https://example.com/previews/1',
+        id: '3135556',
+        title: 'Harder, Better, Faster, Stronger',
+        link: 'https://www.deezer.com/track/3135556',
+        duration: '226',
+        release_date: '2001-03-12',
+        explicit_lyrics: false,
+        preview: 'https://cdnt-preview.dzcdn.net/api/1/1/6/a/2/0/6a2c0a5670afe821e08fc5154909534a.mp3',
+        artist: {
+            id: 27,
+            name: 'Daft Punk'
+        },
         album: {
-            id: 101,
-            title: 'Days of Thunder',
-            link: 'https://example.com/albums/101',
-            cover: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&auto=format&fit=crop&q=80'
+            id: '302127',
+            title: 'Discovery',
+            cover_medium: 'https://cdn-images.dzcdn.net/images/cover/5718f7c81c27e0b2417e2a4c45224f8a/250x250-000000-80-0-0.jpg'
         }
     },
     {
-        id: 2,
-        title: 'Rainy Day',
-        link: 'https://example.com/tracks/2',
-        preview: 'https://example.com/previews/2',
+        id: '820129',
+        title: 'Voyager',
+        link: 'https://www.deezer.com/track/820129',
+        duration: '210',
+        release_date: '2001-03-12',
+        explicit_lyrics: false,
+        preview: 'https://cdnt-preview.dzcdn.net/api/1/1/6/a/2/0/6a2c0a5670afe821e08fc5154909534a.mp3',
+        artist: {
+            id: 27,
+            name: 'Daft Punk'
+        },
         album: {
-            id: 102,
-            title: 'Lofi Girl - Study Beats',
-            link: 'https://example.com/albums/102',
-            cover: 'https://images.unsplash.com/photo-1518173946687-a4c88383e52e?w=300&auto=format&fit=crop&q=80'
-        }
-    },
-    {
-        id: 3,
-        title: 'Awake',
-        link: 'https://example.com/tracks/3',
-        preview: 'https://example.com/previews/3',
-        album: {
-            id: 103,
-            title: 'Epoch',
-            link: 'https://example.com/albums/103',
-            cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop&q=80'
-        }
-    },
-    {
-        id: 4,
-        title: 'Weightless',
-        link: 'https://example.com/tracks/4',
-        preview: 'https://example.com/previews/4',
-        album: {
-            id: 104,
-            title: 'Ambient Works',
-            link: 'https://example.com/albums/104',
-            cover: 'https://images.unsplash.com/photo-1506157786151-b8491531f06c?w=300&auto=format&fit=crop&q=80'
+            id: '302127',
+            title: 'Discovery',
+            cover_medium: 'https://cdn-images.dzcdn.net/images/cover/5718f7c81c27e0b2417e2a4c45224f8a/250x250-000000-80-0-0.jpg'
         }
     }
 ];
