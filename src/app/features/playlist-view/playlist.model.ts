@@ -7,3 +7,4 @@ export interface Playlist {
     duration? : number
    
 }
+
