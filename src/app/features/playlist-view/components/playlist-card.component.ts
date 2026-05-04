@@ -1,11 +1,12 @@
 import {Component} from '@angular/core'
 import { Playlist } from '../playlist.model'
 import { input } from '@angular/core'
-
+import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'playlist-card',
-    imports: [],
+    imports: [RouterLink, CommonModule],
     styles: `
         .playlist-card {
             background: #ffffff;
@@ -21,10 +22,10 @@ import { input } from '@angular/core'
             height: 100%;
         }
 
-        .notion-playlist-card:hover {
-            border-color: rgba(55, 53, 47, 0.2);
-            box-shadow: 0 3px 10px rgba(55, 53, 47, 0.06);
-            transform: translateY(-2px);
+        .playlist-card:hover {
+            background-color: rgba(55, 53, 47, 0.02);
+            box-shadow: 0 3px 6px rgba(55, 53, 47, 0.06);
+            transform: translateY(-1px);
         }
 
         .cover-wrapper {
@@ -69,7 +70,7 @@ import { input } from '@angular/core'
         }
     `,
     template: `
-        <div class="playlist-card">
+        <div class="playlist-card" [routerLink]="['/playlists', playlistData().id]">
             <div class="cover-wrapper">
                <i class="pi pi-music default-cover-icon"></i>
             </div>
