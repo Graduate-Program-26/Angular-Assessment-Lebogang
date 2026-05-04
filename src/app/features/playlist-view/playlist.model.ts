@@ -7,3 +7,10 @@ export interface Playlist {
     duration? : number
    
 }
+
+export interface PlaylistState {
+    playlists: Playlist[];
+    selectedPlaylistId: string | null;
+    isLoading: boolean;
+    error: string | null;
+}
