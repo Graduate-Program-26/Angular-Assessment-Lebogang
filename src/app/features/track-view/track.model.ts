@@ -1,5 +1,3 @@
-
-
 export interface Track {
     id: number,
     title: string,
@@ -11,13 +9,4 @@ export interface Track {
         link : string,
         cover: string,
     }
-}
-
-
-export interface Playlist {
-    id: string,
-    tracks: Track[],
-    title: string,
-    duration? : number
-   
 }

@@ -1,6 +1,6 @@
 import { Component, signal } from "@angular/core";
-import { PlaylistCard } from "./playlist-card.component";
-import { MOCK_PLAYLISTS } from "../../mock-data/playlists.mock";
+import { PlaylistCard } from "./playlist-card.component"; 
+import { MOCK_PLAYLISTS } from "../mock-data/playlists.mock";
 @Component({
     selector: 'playlist-grid',
     imports: [PlaylistCard],

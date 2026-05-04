@@ -1,6 +1,8 @@
 import {Component} from '@angular/core'
-import { Playlist } from '../../models/music.models'
+import { Playlist } from '../playlist.model'
 import { input } from '@angular/core'
+
+
 @Component({
     selector: 'playlist-card',
     imports: [],
@@ -84,5 +86,5 @@ import { input } from '@angular/core'
     `
 })
 export class PlaylistCard {
-    playlistData = input.required<Playlist>()
+    playlistData = input.required<Playlist>();
 }
