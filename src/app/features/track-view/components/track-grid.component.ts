@@ -7,7 +7,7 @@ import { TrackCard } from './track-card.component';
     styles: ``,
     template: `
         <div class="flex flex-col">
-            @for (trcak of tracks(); track track.id) {
+            @for (track of tracks(); track track.id) {
                 <track-card [trackData]="track" />
             }
         </div>

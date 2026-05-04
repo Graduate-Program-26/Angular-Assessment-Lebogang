@@ -6,4 +6,7 @@ import { Observable } from "rxjs";
 })
 export class TracksService {
     
+    async getTracksForAlbum(albumId: string) {
+        
+    }
 }
