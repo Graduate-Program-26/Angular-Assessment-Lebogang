@@ -70,15 +70,15 @@ import { Track } from '../track.model'
     template: `
         <div class="database-row">
             <div class="col-title">
-                <img [src]="trackData.album.cover_medium" [alt]="trackData.title" class="track-thumb" />
-                <span class="track-name">{{ trackData.title }}</span>
-                @if (trackData.explicit_lyrics) {
+                <img [src]="trackData().album.cover_medium" [alt]="trackData().title" class="track-thumb" />
+                <span class="track-name">{{ trackData().title }}</span>
+                @if (trackData().explicit_lyrics) {
                     <span class="explicit-tag">E</span>
                 }
             </div>
-            <div class="col-artist">{{ trackData.artist.name }}</div>
-            <div class="col-album">{{ trackData.album.title }}</div>
-            <div class="col-duration">{{ trackData.duration) }}</div>
+            <div class="col-artist">{{ trackData().artist.name }}</div>
+            <div class="col-album">{{ trackData().album.title }}</div>
+            <div class="col-duration">{{ trackData().duration }}</div>
         </div>
     
     `
