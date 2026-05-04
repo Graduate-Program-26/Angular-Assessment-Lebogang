@@ -51,3 +51,35 @@
 .full-width {
     grid-column: span 2;
 }
+
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.n-btn {
+    background: transparent;
+    border: none;
+    color: rgba(55, 53, 47, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.n-btn:hover {
+    background-color: rgba(55, 53, 47, 0.06);
+    color: #37352f;
+}
+
+.n-btn i {
+    font-size: 0.7rem;
+}

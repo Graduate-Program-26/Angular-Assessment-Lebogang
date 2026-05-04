@@ -2,43 +2,59 @@
   <sidebar></sidebar>
 
   <main class="n-main">
-    
+
     <header-bar></header-bar>
-    
+
     <div class="workspace-content">
-      
+
       <header class="page-title-block">
         <h1>🎵 Music Workspace</h1>
         <p class="subtitle">Your personal database of sounds and playlists.</p>
       </header>
 
       <div class="dashboard-grid">
-        
+
         <section class="block-card" id="charts-section">
           <h2>🔥 Daily Rotation</h2>
         </section>
 
         <section class="block-card" id="playlist-section">
-          <h2>📋 My Playlists</h2>
-          <span><button onclick="">View Playlists <i class="pi pi-angle-double-right"></i></button></span>
+          <div class="card-header">
+            <h2>📋 My Playlists</h2>
+            <button class="n-btn" [routerLink]="['/playlists']">
+              View Playlists <i class="pi pi-angle-double-right"></i>
+            </button>
+          </div>
           <playlist-grid></playlist-grid>
         </section>
 
         <section class="block-card full-width" id="artists-section">
-          <h2>🎤 Favorite Artists</h2>
-          <span><button onclick="">View Artists <i class="pi pi-angle-double-right"></i></button></span>
+          <div class="card-header">
+            <h2>🎤 Favorite Artists</h2>
+            <button class="n-btn" [routerLink]="['/artists']">
+              View Artists <i class="pi pi-angle-double-right"></i>
+            </button>
+          </div> 
           <artist-grid></artist-grid>
         </section>
 
         <section class="block-card" id="albums-section">
-          <h2>📁 Recent Albums</h2>
-          <span><button onclick="">View Albums <i class="pi pi-angle-double-right"></i></button></span>
+          <div class="card-header">
+            <h2>📁 Recent Albums</h2>
+            <button class="n-btn" [routerLink]="['/albums']">
+              View Albums <i class="pi pi-angle-double-right"></i>
+            </button>
+          </div> 
           <album-grid></album-grid>
         </section>
-        
+
         <section class="block-card" id="tracks-section">
-          <h2>🎧 Track List</h2>
-          <span><button onclick="">View Tracks <i class="pi pi-angle-double-right"></i></button></span>
+          <div class="card-header">
+            <h2>🎧 Track List</h2>
+            <button class="n-btn" [routerLink]="['/tracks']">
+              View Tracks <i class="pi pi-angle-double-right"></i>
+            </button>
+          </div> 
           <tracks-grid></tracks-grid>
         </section>
 
