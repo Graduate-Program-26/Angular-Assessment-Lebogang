@@ -1,7 +1,6 @@
 import { signalStore, withState, withMethods, patchState, withHooks } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { PlaylistService } from '../services/playlist.service';
-import { Playlist } from '../playlist.model';
 import { Track } from '../../track-view/track.model';
 import { PlaylistState } from '../playlist.model';
 
