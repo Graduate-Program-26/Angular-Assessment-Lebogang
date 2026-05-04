@@ -7,7 +7,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TrackCard } from '../../track-view/components/track-card.component';
 @Component({
     selector: 'playlist-view',
-    imports: [CommonModule, TrackCard],
+    imports: [CommonModule, TrackCard, SkeletonModule],
     styles: `
     .workspace-content { padding: 2rem; }
         .track-row { 
@@ -32,7 +32,18 @@ import { TrackCard } from '../../track-view/components/track-card.component';
                     }
                 </div>
             } @else {
-                <p>Loading playlist data...</p>
+               <header class="page-title-block">
+                    <p-skeleton width="40%" height="2.5rem" styleClass="mb-2" />
+                    <p-skeleton width="60%" height="1rem" />
+                </header>
+
+                <div class="track-list">
+                    @for (item of [1, 2, 3, 4, 5]; track item) {
+                        <div class="skeleton-track-row">
+                            <p-skeleton width="100%" height="2.5rem" borderRadius="4px" />
+                        </div>
+                    }
+                </div>
             }
         </div>
     `,
