@@ -47,6 +47,22 @@ export const PlaylistStore = signalStore(
             }));
         },
 
+        async removeTrackFromPlaylist(playlistId: string, trackId: string) {
+           await storageService.removeTrackFromPlaylist(playlistId, trackId);
+
+            patchState(store, (state) => ({
+                playlists: state.playlists.map(playlist => {
+                    if (playlist.id === playlistId) {
+                        return { 
+                            ...playlist, 
+                            tracks: playlist.tracks.filter(track => track.id !== trackId) 
+                        };
+                    }
+                    return playlist;
+                })
+            }));
+        },
+
         async renamePlaylist(playlistId: string, newTitle: string) {
             await storageService.updatePlaylist(playlistId, {title: newTitle})
 

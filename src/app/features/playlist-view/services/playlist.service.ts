@@ -84,6 +84,20 @@ export class PlaylistService {
         });
     }
 
+    async removeTrackFromPlaylist(playlistId: string, trackId: string) : Promise<void> {
+        const db = await this.openDB();
+
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['playlists'], 'readwrite');
+            const store = transaction.objectStore('playlists');
+            const request = store.delete(playlistId);
+
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+
     async updatePlaylist(playlistId: string, updatedData: Partial<Playlist>): Promise<void> {
         const db = await this.openDB();
         return new Promise((resolve, reject) => {
