@@ -4,7 +4,6 @@ import { Router, RouterModule } from "@angular/router";
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DialogModule } from 'primeng/dialog';
 import { MenuItem } from "primeng/api";
-import { MusicService } from "../../services/music.services";
 import { FormsModule } from "@angular/forms";
 import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
 
@@ -126,7 +125,6 @@ import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
     `
 })
 export class TopHeader implements OnInit {
-    private musicService = inject(MusicService);
     private cdr = inject(ChangeDetectorRef);
     private zone = inject(NgZone);
 

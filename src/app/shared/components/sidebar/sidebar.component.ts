@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from "@angular/core";
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from "primeng/api";
-import { MusicService } from "../../services/music.services";
 import { RouterModule } from "@angular/router";
 @Component({
     selector: 'sidebar',
@@ -83,7 +82,6 @@ import { RouterModule } from "@angular/router";
     standalone: true
 })
 export class SidebarComponent implements OnInit {
-    musicService = inject(MusicService);
     panalMenuItems: MenuItem[] = [];
 
     ngOnInit() {
