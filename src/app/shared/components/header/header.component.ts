@@ -91,19 +91,19 @@ import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
                 <p-autocomplete [(ngModel)]="selectedSearchItem" 
                     [suggestions]="searchSugesstions" 
                     (completeMethod)="search($event)" 
-                    (onSelect)="onSelectSUgesstions($event)"
+                    (onSelect)="onSelectSugesstions($event)"
                     placeholder="Search Workspace (⌘+K)" />
             </div>
 
 
-            <p-dialog header="Calendar Command Palette" [(visible)]="showCommandPaletteDialog" appendTo="body" [modal]="true" [closable]="true" [style]="{width: '50vw', height: '30vh'}">
+            <p-dialog header="Search  Command Palette" [(visible)]="showCommandPaletteDialog" appendTo="body" [modal]="true" [closable]="true" [style]="{width: '50vw', height: '30vh'}">
                 <p-autocomplete 
                     #searchQuery
                     [(ngModel)]="selectedSearchItem" 
                     [suggestions]="searchSugesstions" 
                     (completeMethod)="search($event)"
                     optionLabel="label"
-                    (onSelect)="onSelectSUgesstions($event)"
+                    (onSelect)="onSelectSugesstions($event)"
                     placeholder="Type a command or search events..."
                     [style]="{'width':'100%'}"
                     [inputStyle]="{'width':'100%'}">
@@ -161,7 +161,7 @@ export class TopHeader implements OnInit {
         ].filter(item => item.toLowerCase().includes(query))
     }
 
-    onSelectSUgesstions(evemt: unknown) {
+    onSelectSugesstions(evemt: unknown) {
         // if suggesstion is clciked, navigate to that route
     }
 
