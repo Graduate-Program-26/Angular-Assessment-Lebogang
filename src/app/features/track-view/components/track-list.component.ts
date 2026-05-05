@@ -17,6 +17,9 @@ import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 import { PlaylistService } from '../../playlist-view/services/playlist.service';
 import { PlaylistStore } from '../../playlist-view/state/playlist.store';
 import { Playlist } from '../../playlist-view/playlist.model';
+
+import { MOCK_PLAYLISTS } from '../../playlist-view/mock-data/playlists.mock';
+import { sign } from 'crypto';
 @Component({
     selector: 'track-list',
     standalone: true,
@@ -140,8 +143,8 @@ import { Playlist } from '../../playlist-view/playlist.model';
                     }
                 </div>
             } @else {
-                <p-data-view #dv [value]="filteredTracks()">
-                    <ng-template pTemplate="list" let-tracks>
+                <p-dataview #dv [value]="filteredTracks()">
+                    <ng-template #list let-tracks>
                         <div class="track-list">
                             @for (track of tracks; track track.id) {
                                 <div class="track-row">
@@ -168,14 +171,14 @@ import { Playlist } from '../../playlist-view/playlist.model';
                             }
                         </div>
                     </ng-template>
-                </p-data-view>
+                </p-dataview>
             }
         </div>
 
-        <p-dialog header="Add to Playlist" [modal]="true" [(visible)]="addToPlaylistDialogVisible" [style]="{ width: '25rem' }">
+        <p-dialog header="Add to Playlist" [modal]="true" [(visible)]="addToPlaylistDialogVisible" [style]="{ width: '25rem' , height: '400px'}">
             <p>Select a playlist to add this track to:</p>
             <div class="card flex justify-center">
-                <p-multiselect [options]="playlists()" [(ngModel)]="selectedPlaylists" [filter]="true" optionLabel="name" placeholder="Select Playlists" [maxSelectedLabels]="3" class="w-full md:w-80" />
+                <p-multiselect [options]="playlists()" [(ngModel)]="selectedPlaylists" [filter]="true" optionLabel="title" placeholder="Select Playlists" class="w-full md:w-80" />
             </div>
 
             <div class="flex justify-end gap-2 mt-4">
@@ -193,7 +196,7 @@ export class TrackList implements OnInit {
     private confirmationService = inject(ConfirmationService);
 
     tracks = signal<Track[]>(MOCK_TRACKS);
-    playlists = this.playlistStore.playlists;
+    playlists = signal(MOCK_PLAYLISTS) || this.playlistStore.playlists;
     selectedPlaylists: Playlist[] = [];
     filteredTracks = signal<Track[]>(MOCK_TRACKS);
     isLoading = signal(true);

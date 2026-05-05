@@ -55,6 +55,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/track-view/components/track-view.component').then(m => m.TrackView)
     },
     {
+        path: 'tracks',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList)// debuging path, REMOVE IN PROD
+
+    },
+    {
         path: 'playlists',
         canActivateChild: [authGuard],
         resolve: playlistResolver,
