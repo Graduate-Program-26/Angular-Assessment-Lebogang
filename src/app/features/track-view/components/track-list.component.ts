@@ -9,11 +9,14 @@ import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { Track } from '../track.model';
 import { TrackCard } from './track-card.component';
 import { TracksService } from '../services/tracks.service';
 import { MOCK_TRACKS } from '../mock-data/tracks.mock';
-
+import { PlaylistService } from '../../playlist-view/services/playlist.service';
+import { PlaylistStore } from '../../playlist-view/state/playlist.store';
+import { Playlist } from '../../playlist-view/playlist.model';
 @Component({
     selector: 'track-list',
     standalone: true,
@@ -27,7 +30,8 @@ import { MOCK_TRACKS } from '../mock-data/tracks.mock';
         SkeletonModule,
         DataViewModule,
         ConfirmDialogModule,
-        TrackCard
+        TrackCard,
+        MultiSelectModule
     ],
     providers: [MessageService, ConfirmationService],
     styles: `
@@ -170,6 +174,10 @@ import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 
         <p-dialog header="Add to Playlist" [modal]="true" [(visible)]="addToPlaylistDialogVisible" [style]="{ width: '25rem' }">
             <p>Select a playlist to add this track to:</p>
+            <div class="card flex justify-center">
+                <p-multiselect [options]="playlists()" [(ngModel)]="selectedPlaylists" [filter]="true" optionLabel="name" placeholder="Select Playlists" [maxSelectedLabels]="3" class="w-full md:w-80" />
+            </div>
+
             <div class="flex justify-end gap-2 mt-4">
                 <p-button label="Cancel" severity="secondary" (click)="addToPlaylistDialogVisible = false" />
                 <p-button label="Add" (click)="confirmAddToPlaylist($event)" />
@@ -179,22 +187,27 @@ import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 })
 export class TrackList implements OnInit {
     tracksService = inject(TracksService);
+    playlistService = inject(PlaylistService);
+    playlistStore = inject(PlaylistStore);
     private messageService = inject(MessageService);
     private confirmationService = inject(ConfirmationService);
 
     tracks = signal<Track[]>(MOCK_TRACKS);
+    playlists = this.playlistStore.playlists;
+    selectedPlaylists: Playlist[] = [];
     filteredTracks = signal<Track[]>(MOCK_TRACKS);
     isLoading = signal(true);
     searchQuery = '';
 
     addToPlaylistDialogVisible = false;
-    selectedTrackForAction: Track = null;
+    selectedTrackForAction: Track | null = null;
 
     ngOnInit() {
         setTimeout(() => {
             // tracks = this.tracksService.getTracksForAlbum(id) // @TODO
             this.isLoading.set(false);
         }, 1200);
+        this.playlistStore.loadPlaylists();
     }
 
     applyFilter() {
@@ -202,7 +215,7 @@ export class TrackList implements OnInit {
         if (!query) {
             this.filteredTracks.set(this.tracks());
         } else {
-            const filtered = this.tracks().filter((track) => 
+            const filtered = this.tracks().filter((track) =>
                 track.title.toLowerCase().includes(query) || track.artist.name.toLowerCase().includes(query)
             );
             this.filteredTracks.set(filtered);
@@ -214,13 +227,34 @@ export class TrackList implements OnInit {
         this.addToPlaylistDialogVisible = true;
     }
 
-    saveToPlaylist() { // @TODO
+    async saveToPlaylist() { 
         this.addToPlaylistDialogVisible = false;
-        this.messageService.add({
-            severity: 'success',
-            summary: 'Saved',
-            detail: `${this.selectedTrackForAction?.title} added to playlist.`
-        });
+
+        if (!this.selectedTrackForAction || !this.selectedPlaylists.length) {
+            return;
+        }
+
+        try {
+            for (const playlist of this.selectedPlaylists) {
+                await this.playlistService.addTrackToPlaylist(playlist.id, this.selectedTrackForAction);
+            }
+
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Saved',
+                detail: `${this.selectedTrackForAction?.title} added to ${this.selectedPlaylists.length} playlist(s).`
+            });
+
+            this.selectedPlaylists = [];
+            this.selectedTrackForAction = null;
+
+        } catch (error) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Could not add track to all playlists.'
+            });
+        }
     }
 
     toggleFavorite(track: Track) { // @TODO
