@@ -207,7 +207,7 @@ export class TrackList implements OnInit {
 
     ngOnInit() {
         setTimeout(() => {
-            // tracks = this.tracksService.getTracksForAlbum(id) // @TODO
+            // tracks = this.tracksService.getTracksForAlbum(id) // @TODO to fetch from route resolver
             this.isLoading.set(false);
         }, 1200);
         this.playlistStore.loadPlaylists();
