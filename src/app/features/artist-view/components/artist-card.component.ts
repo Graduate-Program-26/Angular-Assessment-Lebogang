@@ -54,10 +54,10 @@ import { Artist } from '../artist.model'
     `,
     template: `
         <div class="artist-card">
-            <img [src]="artistData.picture_small" [alt]="artistData.name" class="artist-img" />
+            <img [src]="artistData().picture_small" [alt]="artistData().name" class="artist-img" />
             <div class="artist-details">
-                <h4>{{ artistData.name }}</h4>
-                <a [href]="artistData.link" target="_blank" class="artist-link">View Profile</a>
+                <h4>{{ artistData().name }}</h4>
+                <a [href]="artistData().link" target="_blank" class="artist-link">View Profile</a>
             </div>
         </div>
     `

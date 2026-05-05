@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
 @Component({
     selector: 'playlist-list',
     providers: [MessageService],
-    imports: [DialogModule, FormsModule,ButtonModule, ToastModule ,InputTextModule, MultiSelectModule, PlaylistCard, SkeletonModule, DataView],
+    imports: [DialogModule, FormsModule,ButtonModule, ToastModule ,InputTextModule, MultiSelectModule, PlaylistCard, SkeletonModule, DataView, DataViewModule],
     styles: `
         .skeleton-grid, .playlist-grid {
             display: grid;
@@ -65,17 +65,17 @@ import { MessageService } from 'primeng/api';
                         <p-skeleton width="45%" height="0.8rem" />
                     </div>
                 }
-                 </div>
+                </div>
             } @else {
-                <p-data-view [value]="playlists()">
-                    <ng-template pTemplate="list" let-items>
+                <p-dataview [value]="playlists()">
+                    <ng-template #list let-items>
                         <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-                            @for (playlist of items; track playlist.id) {
+                            @for (playlist of playlists(); track playlist.id) {
                                 <playlist-card [playlistData]="playlist" />
                             }
                         </div>
                     </ng-template>
-                </p-data-view>
+                </p-dataview>
             }
     
 
@@ -98,7 +98,7 @@ export class PlaylistList implements OnInit {
     playlistService = inject(PlaylistService);
     private messageService = inject(MessageService);
     createPlaylistDialogVisible: boolean = false;
-    playlists = this.playlistStore.playlists ||  signal(MOCK_PLAYLISTS);
+    playlists =  signal(MOCK_PLAYLISTS);
 
     playlistTitle : string = '';
 
