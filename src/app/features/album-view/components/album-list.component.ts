@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { Album } from '../album.model';
-import { AlbumnCard } from './album-card.component';
+import { Album, ArtistSummary } from '../album.model';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { MOCK_ALBUMS } from '../mock-data/albums.mock';
 interface Artist {
     id: string,
     name: string,
@@ -16,7 +16,7 @@ interface Artist {
 @Component({
     selector: 'album-list',
     standalone: true,
-    imports: [AlbumnCard, CommonModule, ButtonModule, DataViewModule, SelectButtonModule, FormsModule],
+    imports: [CommonModule, ButtonModule, DataViewModule, SelectButtonModule, FormsModule],
     styles: ``,
     template: `
      <div class="card p-4">
@@ -36,7 +36,7 @@ interface Artist {
                     </div>
                 </ng-template>
 
-                 <ng-template pTemplate="grid" let-items>
+                 <ng-template #grid let-items>
                         <div class="grid grid-nogutter p-2">
                             @for (album of albumData(); track album.id) {
                                 <div class="col-12 sm:col-6 md:col-4 lg:col-3 p-2">
@@ -48,6 +48,23 @@ interface Artist {
                                         <div class="text-500 mb-3">{{ album.release_date }}</div>
                                         <p-button label="View" icon="pi pi-eye" (onClick)="viewAlbum(album.id)"></p-button>
                                     </div>
+                                </div>
+                            }
+                        </div>
+                    </ng-template>
+
+                    <ng-template #list let-items>
+                        <div class="flex flex-col gap-3 w-full p-2">
+                            @for (album of albumData(); track album.id) {
+                                <div class="flex align-items-center justify-content-between p-3 border surface-border border-round">
+                                    <div class="flex align-items-center gap-3">
+                                        <img [src]="album.cover || 'assets/placeholder.png'" [alt]="album.title" class="w-4rem h-4rem object-cover border-round" />
+                                        <div>
+                                            <div class="text-lg font-medium text-900">{{ album.title }}</div>
+                                            <div class="text-500">{{ album.release_date }}</div>
+                                        </div>
+                                    </div>
+                                    <p-button label="View" icon="pi pi-eye" [text]="true" (onClick)="viewAlbum(album.id)"></p-button>
                                 </div>
                             }
                         </div>
@@ -64,7 +81,7 @@ export class AlbumList implements OnInit {
     options = ['list', 'grid'];
     layout: 'list' | 'grid' = 'list';
     albumData = signal<Album[]>([]);
-    artist = signal<Artist>({
+    artist = signal<ArtistSummary>({
         name: '',
         id: '',
         picture_small: ''
@@ -73,10 +90,14 @@ export class AlbumList implements OnInit {
 
     ngOnInit(): void {
         this.route.data.subscribe(({ albumData }) => {
+            /*
             this.albumData.set(albumData);
             if (albumData.length > 0 && albumData[0].artist) {
                 this.artist.set(albumData[0].artist);
             }
+                */
+            this.albumData.set(MOCK_ALBUMS);
+             this.artist.set(MOCK_ALBUMS[0].artist)
         })
     }
 
