@@ -143,7 +143,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 
         <div class="track-info">
             <h1 class="track-title">{{ trackData?.title }}</h1>
-            <h3 class="track-artist">{{ trackData?.artist }}</h3>
+            <h3 class="track-artist">{{ trackData?.artist?.name }}</h3>
         </div>
 
         <div class="progress-section">
@@ -213,7 +213,7 @@ export class TrackView implements OnInit, OnDestroy {
         this.route.data.subscribe(({ trackData }) => {
             this.trackData = trackData || MOCK_TRACKS[1];
 
-            const TEST_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // replace with trackData.preview
+            const TEST_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // will be replaced with trackData.preview
             this.loadTrack(TEST_URL);
         });
     }
@@ -286,8 +286,8 @@ export class TrackView implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         // Prevent memory leaks by pausing and removing the listeners on destroy
-        this.audio.pause();
-        this.audio.srcObject = null;
+   
+       
     }
 
 }

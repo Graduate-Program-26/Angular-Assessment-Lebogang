@@ -1,9 +1,9 @@
 import {Component, input } from '@angular/core'
 import { Track } from '../track.model'
-
+import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 @Component({
     selector: 'track-card',
-    imports: [],
+    imports: [durationPipe],
     styles: `
     .database-row {
             display: flex;
@@ -78,14 +78,11 @@ import { Track } from '../track.model'
             </div>
             <div class="col-artist">{{ trackData().artist.name }}</div>
             <div class="col-album">{{ trackData().album.title }}</div>
-            <div class="col-duration">{{ trackData().duration }}</div>
+            <div class="col-duration">{{ trackData().duration  | durationFormat}}</div>
         </div>
     
     `
 })
 export class TrackCard {
     trackData = input.required<Track>();
-
-
-    // @TODO: use pipe to format duration
 }

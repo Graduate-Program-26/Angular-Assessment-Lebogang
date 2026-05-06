@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -20,6 +20,7 @@ import { Playlist } from '../../playlist-view/playlist.model';
 
 import { MOCK_PLAYLISTS } from '../../playlist-view/mock-data/playlists.mock';
 import { sign } from 'crypto';
+import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'track-list',
     standalone: true,
@@ -188,7 +189,8 @@ import { sign } from 'crypto';
         </p-dialog>
     `
 })
-export class TrackList implements OnInit {
+export class TrackList implements OnInit, OnDestroy {
+    private route = inject(ActivatedRoute);
     tracksService = inject(TracksService);
     playlistService = inject(PlaylistService);
     playlistStore = inject(PlaylistStore);
@@ -210,9 +212,18 @@ export class TrackList implements OnInit {
             // tracks = this.tracksService.getTracksForAlbum(id) // @TODO to fetch from route resolver
             this.isLoading.set(false);
         }, 1200);
+        this.route.data.subscribe(({ trackData }) => {
+            this.tracks = trackData || MOCK_TRACKS;
+
+        });
         this.playlistStore.loadPlaylists();
     }
 
+    ngOnDestroy(): void {
+        // unsubscribe
+    }
+
+    
     applyFilter() {
         const query = this.searchQuery.toLowerCase().trim();
         if (!query) {
@@ -317,4 +328,6 @@ export class TrackList implements OnInit {
             }
         });
     }
+
+    
 }

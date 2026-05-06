@@ -8,3 +8,12 @@ export const trackResolver: ResolveFn<any> = (route, state) => {
 
   return tracksService.getTrack(trackId);
 };
+
+export const tracksResolver: ResolveFn<any> = (route, state) => {
+  const tracksService =  inject(TracksService)
+  const albumId = route.paramMap.get('id')!;
+  
+
+  return tracksService.getTracksForAlbum(albumId);
+};
+
