@@ -103,7 +103,7 @@ export class AlbumList implements OnInit {
 
     viewAlbum(id: string) {
         if (id !== " ") {
-            this.router.navigate(['..', 'albums', id], { relativeTo: this.route });
+            this.router.navigate(['..', 'artist', this.artist().id, 'albums', id], { relativeTo: this.route.parent });// @TODO: validate that this route goes to the right place relative to the route
         }
     }
 }
