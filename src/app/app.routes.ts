@@ -3,7 +3,7 @@ import { authGuard } from './core/guards/auth-guard';
 
 import { artistResolver } from './features/artist-view/resolvers/artists.resolver'; 
 import { playlistResolver } from './features/playlist-view/resolvers/playlists.resolver'; 
-import { albumResolver } from './features/album-view/resolvers/albums.resolver';
+import { albumResolver, albumsResolver } from './features/album-view/resolvers/albums.resolver';
 import { trackResolver, tracksResolver } from './features/track-view/resolvers/tracks.resolver';
 export const routes: Routes = [
     {
@@ -32,6 +32,9 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'albums',
+                        resolve: {
+                            albumsData: albumsResolver
+                        },
                         loadComponent: () => import('./features/album-view/components/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
                     },
                     {
@@ -52,6 +55,8 @@ export const routes: Routes = [
             albumData: albumResolver
         },
         loadComponent: () => import('./features/album-view/components/album-view.component').then(m => m.AlbumnView) // Accessible globally
+        //loadComponent: () => import('./features/album-view/components/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
+
     },
     {
         path: 'tracks/:id',
