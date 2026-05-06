@@ -63,13 +63,13 @@ import { Album } from '../album.model';
     `,
     template: `
         <div class="album-card">
-            <img [src]="albumData.cover_medium" [alt]="albumData.title" class="album-img" />
+            <img [src]="albumData().cover_medium" [alt]="albumData().title" class="album-img" />
             <div class="album-details">
-                <h4 class="album-title">{{ albumData.title }}</h4>
-                <span class="album-artist">{{ albumData.artist.name }}</span>
+                <h4 class="album-title">{{ albumData().title }}</h4>
+                <span class="album-artist">{{ albumData().artist.name }}</span>
                 <div class="album-meta">
-                    <span>{{ albumData.nb_tracks }} tracks</span>
-                    <span>{{ albumData.release_date }}</span>
+                    <span>{{ albumData().nb_tracks }} tracks</span>
+                    <span>{{ albumData().release_date }}</span>
                 </div>
             </div>
         </div>

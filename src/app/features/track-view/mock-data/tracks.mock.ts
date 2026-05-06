@@ -8,7 +8,7 @@ export const MOCK_TRACKS: Track[] = [
         duration: '226',
         release_date: '2001-03-12',
         explicit_lyrics: false,
-        preview: 'https://cdnt-preview.dzcdn.net/api/1/1/6/a/2/0/6a2c0a5670afe821e08fc5154909534a.mp3',
+        preview: "https://cdnt-preview.dzcdn.net/api/1/1/a/d/d/0/addd8f83f80a32e2388a37bd664a8ba7.mp3?hdnea=exp=1777974391~acl=/api/1/1/a/d/d/0/addd8f83f80a32e2388a37bd664a8ba7.mp3*~data=user_id=0,application_id=42~hmac=a56f1eb55c829c6540149a098c5e31a60b79e46890e35917c7fd498f5b9ab986%22",
         artist: {
             id: 27,
             name: 'Daft Punk'
@@ -26,7 +26,7 @@ export const MOCK_TRACKS: Track[] = [
         duration: '210',
         release_date: '2001-03-12',
         explicit_lyrics: false,
-        preview: 'https://cdnt-preview.dzcdn.net/api/1/1/6/a/2/0/6a2c0a5670afe821e08fc5154909534a.mp3',
+        preview:  "https://stock.adobe.com/za/search/audio?k=1991144426",
         artist: {
             id: 27,
             name: 'Daft Punk'

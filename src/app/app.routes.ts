@@ -4,6 +4,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { artistResolver } from './features/artist-view/resolvers/artists.resolver'; 
 import { playlistResolver } from './features/playlist-view/resolvers/playlists.resolver'; 
 import { albumResolver } from './features/album-view/resolvers/albums.resolver';
+import { trackResolver, tracksResolver } from './features/track-view/resolvers/tracks.resolver';
 export const routes: Routes = [
     {
         path: '',
@@ -35,6 +36,9 @@ export const routes: Routes = [
                     },
                     {
                         path: 'tracks',
+                        resolve: {
+                            tracks: tracksResolver
+                        },
                         loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList) // list of tracks for a specific artist
                     }
                 ]
@@ -50,9 +54,18 @@ export const routes: Routes = [
         loadComponent: () => import('./features/album-view/components/album-view.component').then(m => m.AlbumnView) // Accessible globally
     },
     {
-        path: 'track/:id',
+        path: 'tracks/:id',
         canActivate: [authGuard],
+        resolve:  {
+            trackData: trackResolver
+        },
         loadComponent: () => import('./features/track-view/components/track-view.component').then(m => m.TrackView)
+    },
+    {
+        path: 'tracks',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList)// debuging path, REMOVE IN PROD
+
     },
     {
         path: 'playlists',
