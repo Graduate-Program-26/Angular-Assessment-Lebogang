@@ -14,4 +14,8 @@ export class AlbumService {
     async getAlbumFromId(id: string) {
         return MOCK_ALBUMS[0];
     }
+
+    async searchAlbums(query: string) {
+        
+    }
 }
