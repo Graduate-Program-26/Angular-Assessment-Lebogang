@@ -10,7 +10,7 @@ import { Track } from "../track.model";
 export class TracksService {
     
     async getTracksForAlbum(albumId: string) {
-        
+        return MOCK_TRACKS;
     }
 
     async getTrack(trackId: string) : Promise<Track> {
