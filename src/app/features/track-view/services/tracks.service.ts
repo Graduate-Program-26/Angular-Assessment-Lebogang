@@ -22,10 +22,20 @@ export class TracksService {
             }
         }
     async getTracksForAlbum(albumId: string) {
-        return MOCK_TRACKS;
+         try {
+             const url = `api/album/${albumId}/tracks`;
+                    const response = await firstValueFrom(this.http.get<any>(url));
+              
+                return response.data;
+         } catch (error) {
+            return []
+         }
+        
+         
     }
 
     async getTrack(trackId: string) : Promise<Track> {
+        const url = `api/album/${trackId}/tracks`
         return MOCK_TRACKS[1];
     }
 

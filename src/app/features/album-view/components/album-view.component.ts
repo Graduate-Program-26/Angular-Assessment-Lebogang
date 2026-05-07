@@ -71,25 +71,8 @@ export class AlbumnView implements OnInit {
         this.route.data.subscribe(async ({ albumData }) => {
             if (albumData) {
                 this.album = albumData;
-
-                // Fetch tracks for the active album after assigning the album data
-                if (this.album?.id) {
-                    try {
-                        this.albumTracks = await this.tracksService.getTracksForAlbum(this.album.id);
-                    } catch (error) {
-                        console.error('Error loading tracks:', error);
-                    }
-                }
-            } else {
-                // @TODO: 
-                this.album = MOCK_ALBUMS[0];
-                if (this.album?.id) {
-                    try {
-                        this.albumTracks = await this.tracksService.getTracksForAlbum(this.album.id);
-                    } catch (error) {
-                        console.error('Error loading tracks:', error);
-                    }
-                }
+                this.albumTracks = albumData.tracks;
+                
             }
         });
     }

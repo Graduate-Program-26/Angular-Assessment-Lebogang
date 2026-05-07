@@ -19,7 +19,6 @@ import { PlaylistStore } from '../../playlist-view/state/playlist.store';
 import { Playlist } from '../../playlist-view/playlist.model';
 
 import { MOCK_PLAYLISTS } from '../../playlist-view/mock-data/playlists.mock';
-import { sign } from 'crypto';
 import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'track-list',
@@ -208,13 +207,8 @@ export class TrackList implements OnInit, OnDestroy {
     selectedTrackForAction: Track | null = null;
 
     ngOnInit() {
-        setTimeout(() => {
-            // tracks = this.tracksService.getTracksForAlbum(id) // @TODO to fetch from route resolver
-            this.isLoading.set(false);
-        }, 1200);
         this.route.data.subscribe(({ trackData }) => {
-            this.tracks = trackData || MOCK_TRACKS;
-
+            this.tracks = trackData ;
         });
         this.playlistStore.loadPlaylists();
     }
