@@ -1,20 +1,20 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 
-import { artistResolver } from './features/artist-view/resolvers/artists.resolver'; 
-import { playlistResolver } from './features/playlist-view/resolvers/playlists.resolver'; 
-import { albumResolver, albumsResolver } from './features/album-view/resolvers/albums.resolver';
-import { trackResolver, tracksResolver } from './features/track-view/resolvers/tracks.resolver';
+import { artistResolver, trendingArtistResolver } from './features/artist-view/resolvers/artists.resolver';
+import { playlistResolver } from './features/playlist-view/resolvers/playlists.resolver';
+import { albumResolver, albumsResolver, tredingAlbumResolver } from './features/album-view/resolvers/albums.resolver';
+import { trackResolver, tracksResolver, trendingTracksResolver } from './features/track-view/resolvers/tracks.resolver';
 export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./app').then(m => m.App), // Landing page
-    }, 
+    },
     {
         path: 'home',
         loadComponent: () => import('./features/home/home').then(m => m.Home),
         canActivate: [authGuard],
-        data: {breadcrumb: 'Home'}
+        data: { breadcrumb: 'Home' }
     },
     {
         path: 'artist',
@@ -22,19 +22,22 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
+                resolve: {
+                    artistData: trendingArtistResolver
+                },
                 loadComponent: () => import('./features/artist-view/components/artist-list.component').then(m => m.ArtistList)
             },
             {
                 path: ':id',
                 loadComponent: () => import('./features/artist-view/components/artist-view.component').then(m => m.ArtistView),
-                data: {breadcrumb: 'Artist'},
+                data: { breadcrumb: 'Artist' },
                 resolve: {
-                    artistData : artistResolver
+                    artistData: artistResolver
                 },
                 children: [
                     {
                         path: 'albums',
-                        data: {breadcrumb: 'Albums'},
+                        data: { breadcrumb: 'Albums' },
                         resolve: {
                             albumsData: albumsResolver
                         },
@@ -42,7 +45,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'tracks',
-                        data: {breadcrumb: 'Tracks'},
+                        data: { breadcrumb: 'Tracks' },
                         resolve: {
                             tracks: tracksResolver
                         },
@@ -55,7 +58,7 @@ export const routes: Routes = [
     {
         path: 'albums/:id',
         canActivate: [authGuard],
-        data: {breadcrumb: 'Album'},
+        data: { breadcrumb: 'Album' },
         resolve: {
             albumData: albumResolver
         },
@@ -66,22 +69,35 @@ export const routes: Routes = [
     {
         path: 'tracks/:id',
         canActivate: [authGuard],
-        data: {breadcrumb: 'Track'},
-        resolve:  {
+        data: { breadcrumb: 'Track' },
+        resolve: {
             trackData: trackResolver
         },
         loadComponent: () => import('./features/track-view/components/track-view.component').then(m => m.TrackView)
     },
     {
+        path: 'albums',
+        canActivate: [authGuard],
+        data: { breadcrumb: 'Albums' },
+        resolve: {
+            albumData: tredingAlbumResolver
+        },
+        loadComponent: () => import('./features/album-view/components/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
+    },
+    {
         path: 'tracks',
         canActivate: [authGuard],
-        loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList)// debuging path, REMOVE IN PROD
+        data: { breadcrumb: 'Tracks' },
+        resolve: {
+            trackData: trendingTracksResolver
+        },
+        loadComponent: () => import('./features/track-view/components/track-list.component').then(m => m.TrackList) // list of tracks for a specific artist
 
     },
     {
         path: 'playlists',
         canActivateChild: [authGuard],
-        data: {breadcrumb: 'Playlists'},
+        data: { breadcrumb: 'Playlists' },
         resolve: playlistResolver,
         children: [
             {
@@ -90,7 +106,7 @@ export const routes: Routes = [
             },
             {
                 path: ':id', // Renders a specific playlist
-                data: {breadcrumb: 'Playlist'},
+                data: { breadcrumb: 'Playlist' },
                 loadComponent: () => import('./features/playlist-view/components/playlist-view.component').then(m => m.PlaylistView)
             }
         ]

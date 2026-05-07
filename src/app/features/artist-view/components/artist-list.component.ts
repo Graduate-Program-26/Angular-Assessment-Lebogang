@@ -87,12 +87,10 @@ export class ArtistList implements OnInit {
     artists = signal<Artist[]>([]);
 
     ngOnInit(): void {
-        try {
-          //  this.artists= await this.artistService.fetchArtists();
-        } catch (error) {
-            
-        }
-        this.artists.set(MOCK_ARTISTS)
+        this.route.data.subscribe(({ artistData }) => {
+            this.artists.set(artistData);
+        });
+
     }
 
     viewArtist(artistId: string): void {

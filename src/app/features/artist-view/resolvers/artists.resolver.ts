@@ -9,3 +9,9 @@ export const artistResolver: ResolveFn<any> = (route, state) => {
   
   return artistService.fetchArtistDetails(aristId)
 };
+
+export const trendingArtistResolver: ResolveFn<any> = (route, state) => {
+  const artistService = inject(ArtistService);
+  
+  return artistService.fetchChartArtist();
+};

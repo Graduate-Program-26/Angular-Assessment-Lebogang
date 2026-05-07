@@ -17,3 +17,10 @@ export const albumsResolver: ResolveFn<any> = (route, state) => {
   
   return albumService.getAlbumsDataFromArtist(artistId);
 };
+
+export const tredingAlbumResolver:  ResolveFn<any> = (route, state) => {
+ const albumService = inject(AlbumService);
+
+  return albumService.getChartedAlbums()
+
+}

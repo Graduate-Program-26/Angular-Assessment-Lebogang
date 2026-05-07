@@ -93,14 +93,12 @@ export class AlbumList implements OnInit {
 
     ngOnInit(): void {
         this.route.data.subscribe(({ albumData }) => {
-            /*
+            
             this.albumData.set(albumData);
             if (albumData.length > 0 && albumData[0].artist) {
                 this.artist.set(albumData[0].artist);
             }
-                */
-            this.albumData.set(MOCK_ALBUMS);
-             this.artist.set(MOCK_ALBUMS[0].artist)
+             
         })
     }
 

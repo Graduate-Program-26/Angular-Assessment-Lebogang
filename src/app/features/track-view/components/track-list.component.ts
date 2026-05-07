@@ -196,10 +196,10 @@ export class TrackList implements OnInit, OnDestroy {
     private messageService = inject(MessageService);
     private confirmationService = inject(ConfirmationService);
 
-    tracks = signal<Track[]>(MOCK_TRACKS);
+    tracks = signal<Track[]>([]);
     playlists = signal(MOCK_PLAYLISTS) || this.playlistStore.playlists;
     selectedPlaylists: Playlist[] = [];
-    filteredTracks = signal<Track[]>(MOCK_TRACKS);
+    filteredTracks = signal<Track[]>([]);
     isLoading = signal(true);
     searchQuery = '';
 
@@ -208,7 +208,9 @@ export class TrackList implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.route.data.subscribe(({ trackData }) => {
-            this.tracks = trackData ;
+            this.tracks.set(trackData)
+            this.filteredTracks.set(trackData)
+            this.isLoading.set(false);
         });
         this.playlistStore.loadPlaylists();
     }

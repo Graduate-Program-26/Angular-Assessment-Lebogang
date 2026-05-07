@@ -17,3 +17,8 @@ export const tracksResolver: ResolveFn<any> = (route, state) => {
   return tracksService.getTracksForAlbum(albumId);
 };
 
+export const trendingTracksResolver: ResolveFn<any> = (route, state) => {
+  const tracksService =  inject(TracksService);
+
+  return tracksService.getChartedTracks();
+};
