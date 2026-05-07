@@ -1,8 +1,9 @@
 import {Component, input} from '@angular/core';
 import { Album } from '../album.model';
+import { RouterLink } from '@angular/router';
 @Component({
     selector: 'album-card',
-    imports: [],
+    imports: [RouterLink],
     styles: `
         .album-card {
             background: #ffffff;
@@ -62,7 +63,7 @@ import { Album } from '../album.model';
     
     `,
     template: `
-        <div class="album-card">
+        <div class="album-card"  [routerLink]="['/albums', albumData().id]">
             <img [src]="albumData().cover_medium" [alt]="albumData().title" class="album-img" />
             <div class="album-details">
                 <h4 class="album-title">{{ albumData().title }}</h4>

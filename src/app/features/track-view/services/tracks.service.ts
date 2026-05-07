@@ -16,4 +16,8 @@ export class TracksService {
     async getTrack(trackId: string) : Promise<Track> {
         return MOCK_TRACKS[1];
     }
+
+    async searchTracks(query: string) {
+        
+    }
 }

@@ -1,9 +1,10 @@
 import {Component, input } from '@angular/core'
 import { Track } from '../track.model'
 import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
+import { RouterLink } from '@angular/router';
 @Component({
     selector: 'track-card',
-    imports: [durationPipe],
+    imports: [durationPipe, RouterLink],
     styles: `
     .database-row {
             display: flex;
@@ -68,7 +69,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 
     `,
     template: `
-        <div class="database-row">
+        <div class="database-row" [routerLink]="['/tracks', trackData().id]">
             <div class="col-title">
                 <img [src]="trackData().album.cover_medium" [alt]="trackData().title" class="track-thumb" />
                 <span class="track-name">{{ trackData().title }}</span>
@@ -80,7 +81,6 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
             <div class="col-album">{{ trackData().album.title }}</div>
             <div class="col-duration">{{ trackData().duration  | durationFormat}}</div>
         </div>
-    
     `
 })
 export class TrackCard {
