@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MOCK_ALBUMS } from '../mock-data/albums.mock';
+import { AlbumService } from '../services/albums.service';
 interface Artist {
     id: string,
     name: string,
@@ -78,6 +79,8 @@ interface Artist {
 export class AlbumList implements OnInit {
     private route = inject(ActivatedRoute);
     private router = inject(Router);
+    albumsService = inject(AlbumService);
+    
     options = ['list', 'grid'];
     layout: 'list' | 'grid' = 'list';
     albumData = signal<Album[]>([]);
