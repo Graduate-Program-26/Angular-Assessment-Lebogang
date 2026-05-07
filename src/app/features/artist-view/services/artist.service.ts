@@ -17,21 +17,38 @@ export class ArtistService {
         try {
             const url = 'api/chart/0/artists';
             const response = await firstValueFrom(this.http.get<any>(url));
-            
+
             return response.data;
         } catch (error) {
 
         }
     }
 
-    async fetchArtistDetails(id: string) {
+    async fetchArtistDetails(artistId: string) {
+        try {
+            const url = `api/artist/${artistId}`;
+            const response = await firstValueFrom(this.http.get<any>(url));
 
+            return response;
+        } catch (error) {
+
+        }
     }
 
     async fetchArtists() {
 
     }
 
+    async fetchTopSongs(artistId: string) {
+        try {
+            const url = `api/artist/${artistId}/top`;
+            const response = await firstValueFrom(this.http.get<any>(url));
+
+            return response.data;
+        } catch (error) {
+
+        }
+    }
     async searchArtists(query: string) {
 
     }
