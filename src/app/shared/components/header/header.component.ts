@@ -1,12 +1,14 @@
 import { Component, inject, OnInit, HostListener, NgZone, ChangeDetectorRef } from "@angular/core";
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { Router, RouterModule } from "@angular/router";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DialogModule } from 'primeng/dialog';
 import { MenuItem } from "primeng/api";
 import { FormsModule } from "@angular/forms";
 import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
-
+import { BreadcrumbService } from "../../directives/breadCrumb";
+import { filter } from "rxjs";
+import { NavigationEnd } from "@angular/router";
 @Component({
     selector: 'header-bar',
     standalone: true,
@@ -125,13 +127,16 @@ import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
     `
 })
 export class TopHeader implements OnInit {
+    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
     private cdr = inject(ChangeDetectorRef);
     private zone = inject(NgZone);
+    breadCrumb = inject(BreadcrumbService);
 
     showCommandPaletteDialog : boolean = false;
 
-    breadCrumbItems: MenuItem[] | undefined;
-    home: MenuItem | undefined;
+    breadCrumbItems: MenuItem[] = [];
+    home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 
     searchSugesstions: string[] = [];
     selectedSearchItem: unknown;
@@ -143,11 +148,12 @@ export class TopHeader implements OnInit {
             routerLink: ['/home']
         };
 
-        this.breadCrumbItems = [
-            { label: 'Artist', routerLink: '/artist' },
-            { label: 'Album', routerLink: '/album' },
-            { label: 'Playlist', routerLink: '/playlist' }
-        ]
+       this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(() => {
+
+            this.breadCrumbItems = this.breadCrumb.getBreadcrumbs(this.activatedRoute.root);
+        });
     }
 
     search(evemt: AutoCompleteCompleteEvent) {

@@ -13,7 +13,8 @@ export const routes: Routes = [
     {
         path: 'home',
         loadComponent: () => import('./features/home/home').then(m => m.Home),
-        canActivate: [authGuard]
+        canActivate: [authGuard],
+        data: {breadcrumb: 'Home'}
     },
     {
         path: 'artist',
@@ -26,12 +27,14 @@ export const routes: Routes = [
             {
                 path: ':id',
                 loadComponent: () => import('./features/artist-view/components/artist-view.component').then(m => m.ArtistView),
+                data: {breadcrumb: 'Artist'},
                 resolve: {
                     artistData : artistResolver
                 },
                 children: [
                     {
                         path: 'albums',
+                        data: {breadcrumb: 'Albums'},
                         resolve: {
                             albumsData: albumsResolver
                         },
@@ -39,6 +42,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'tracks',
+                        data: {breadcrumb: 'Tracks'},
                         resolve: {
                             tracks: tracksResolver
                         },
@@ -51,6 +55,7 @@ export const routes: Routes = [
     {
         path: 'albums/:id',
         canActivate: [authGuard],
+        data: {breadcrumb: 'Album'},
         resolve: {
             albumData: albumResolver
         },
@@ -61,6 +66,7 @@ export const routes: Routes = [
     {
         path: 'tracks/:id',
         canActivate: [authGuard],
+        data: {breadcrumb: 'Track'},
         resolve:  {
             trackData: trackResolver
         },
@@ -75,6 +81,7 @@ export const routes: Routes = [
     {
         path: 'playlists',
         canActivateChild: [authGuard],
+        data: {breadcrumb: 'Playlists'},
         resolve: playlistResolver,
         children: [
             {
@@ -83,6 +90,7 @@ export const routes: Routes = [
             },
             {
                 path: ':id', // Renders a specific playlist
+                data: {breadcrumb: 'Playlist'},
                 loadComponent: () => import('./features/playlist-view/components/playlist-view.component').then(m => m.PlaylistView)
             }
         ]

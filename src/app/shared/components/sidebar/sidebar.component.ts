@@ -87,11 +87,6 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
         this.panalMenuItems = [ // would be. dynamic
             {
-                label: 'Home',
-                icon: 'pi pi-home',
-                routerLink: ['/home']
-            },
-            {
                 label: 'Workspace Databases',
                 icon: 'pi pi-folder',
                 items: [
@@ -108,7 +103,7 @@ export class SidebarComponent implements OnInit {
                     {
                         label: 'Tracks',
                         icon: 'pi pi-volume-up',
-                        routerLink: ['/track/1']
+                        routerLink: ['/tracks/1']
                     }
                 ]
             },

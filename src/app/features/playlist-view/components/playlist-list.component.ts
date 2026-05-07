@@ -49,7 +49,7 @@ import { MessageService } from 'primeng/api';
 
     `,
     template: `
-        <div class="workspace-content">
+        <div class="workspace-content p-2">
             <p-toast position="top-center" />
             <header class="list-header">
                 <h1 class="n-title">📋 Playlist Database</h1>

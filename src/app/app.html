@@ -1,8 +1,16 @@
 
-<main class="main">
-    <landing-page></landing-page>
-</main>
+
+    
 
 
-
-<router-outlet />
+<div class="layout-wrapper">
+    <sidebar></sidebar>
+    
+    <div class="main-content">
+        <header-bar></header-bar>
+        
+        <main class="page-body">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>
