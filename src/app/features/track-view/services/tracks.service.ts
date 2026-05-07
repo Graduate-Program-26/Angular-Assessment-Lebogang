@@ -35,8 +35,10 @@ export class TracksService {
     }
 
     async getTrack(trackId: string) : Promise<Track> {
-        const url = `api/album/${trackId}/tracks`
-        return MOCK_TRACKS[1];
+        const url = `api/track/${trackId}`
+       const response = await firstValueFrom(this.http.get<any>(url));
+
+    return response;
     }
 
     async searchTracks(query: string) {

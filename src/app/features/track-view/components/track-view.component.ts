@@ -210,10 +210,14 @@ export class TrackView implements OnInit, OnDestroy {
         }
 
         this.route.data.subscribe(({ trackData }) => {
-            this.trackData = trackData || MOCK_TRACKS[1];
+            this.trackData = trackData ;
 
-            const TEST_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // will be replaced with trackData.preview
-            this.loadTrack(TEST_URL);
+            try {
+              this.loadTrack(this.trackData!.preview);
+            }catch(error) {
+
+            }
+           
         });
     }
 
