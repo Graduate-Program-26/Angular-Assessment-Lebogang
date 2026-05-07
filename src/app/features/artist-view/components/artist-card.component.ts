@@ -1,9 +1,10 @@
 import {Component, input} from '@angular/core'
 import { Artist } from '../artist.model'
-
+import { ButtonModule } from 'primeng/button';
+import { RouterLink } from '@angular/router';
 @Component({
     selector: 'artist-card',
-    imports: [],
+    imports: [ButtonModule, RouterLink],
     styles: `
     .artist-card {
             background: #ffffff;
@@ -57,7 +58,7 @@ import { Artist } from '../artist.model'
             <img [src]="artistData().picture_small" [alt]="artistData().name" class="artist-img" />
             <div class="artist-details">
                 <h4>{{ artistData().name }}</h4>
-                <a [href]="artistData().link" target="_blank" class="artist-link">View Profile</a>
+                <p-button class="artist-link"  [routerLink]="['/artists', artistData().id]">View Profile</p-button>
             </div>
         </div>
     `

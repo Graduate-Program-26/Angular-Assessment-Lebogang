@@ -59,7 +59,7 @@ import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
                         @for (track of artistsTracks; track track.id; let i = $index) {
                             <div class="flex items-center gap-3 p-2 hover:bg-surface-hover rounded-lg transition-colors duration-200">
                                 <span class="text-sm text-muted-foreground font-semibold w-6 text-right">{{ i + 1 }}</span>
-                                 <div class="flex-1" [routerLink]="['/tracks', track.id]">
+                                 <div class="flex-1" >
                                     <track-card [trackData]="track" />
                                 </div>
                             </div>
