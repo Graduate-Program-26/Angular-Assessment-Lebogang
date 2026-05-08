@@ -7,6 +7,7 @@ export interface AlbumMinimal {
     id: string;
     title: string;
     cover_medium: string;
+    cover_xl?: string
 }
 
 export interface Track {

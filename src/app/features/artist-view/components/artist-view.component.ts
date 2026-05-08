@@ -29,7 +29,7 @@ import { ButtonModule } from 'primeng/button';
         <div class="max-w-7xl mx-auto p-6 md:p-8 space-y-10">
             <header class="artist-hero flex flex-col md:flex-row items-center md:items-end gap-6 p-6 md:p-8 rounded-3xl shadow-xl border border-surface-border">
                 <img 
-                    [src]="artistState().info?.picture_small || 'https://placehold.co/150'" 
+                    [src]="artistState().info?.picture_big || 'https://placehold.co/150'" 
                     [alt]="artistState().info?.name" 
                     class="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-background" 
                 />

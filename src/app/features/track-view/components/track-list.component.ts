@@ -54,7 +54,7 @@ import { ActivatedRoute } from '@angular/router';
         .n-title {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #37352f;
+            color: white;
             margin: 0;
         }
 
@@ -89,9 +89,7 @@ import { ActivatedRoute } from '@angular/router';
             transition: background 0.1s;
         }
 
-        .track-row:hover {
-            background: rgba(55, 53, 47, 0.02);
-        }
+
 
         .track-actions {
             display: flex;
@@ -116,8 +114,7 @@ import { ActivatedRoute } from '@angular/router';
 
             <header class="list-header">
                 <div>
-                    <h1 class="n-title">📋 Music Database</h1>
-                    <h2>Album Database</h2>
+                    <h1 class="n-title">Charting Music</h1>
                 </div>
             </header>
 

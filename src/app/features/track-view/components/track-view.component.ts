@@ -135,7 +135,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 
     <div class="now-playing-content">
         <div class="album-art-wrapper">
-            <img [src]="trackData?.album?.cover_medium" alt="Album Art" class="album-art" />
+            <img [src]="trackData?.album?.cover_xl" alt="Album Art" class="album-art" />
         </div>
 
         <div class="track-info">

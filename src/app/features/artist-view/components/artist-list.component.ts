@@ -6,7 +6,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Artist } from '../artist.model';
 import { ArtistService } from '../services/artist.service';
 @Component({
@@ -16,7 +16,7 @@ import { ArtistService } from '../services/artist.service';
     template: `
      <div class="card p-4">
             <header class="flex justify-content-between align-items-center mb-4">
-                <h1 class="text-3xl font-bold text-900">Artists</h1>
+                <h1 class="text-3xl font-bold text-900">Charting Artists</h1>
             </header>
 
             <div>

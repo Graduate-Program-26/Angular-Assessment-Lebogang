@@ -5,7 +5,9 @@ export interface Artist {
     name: string,
     link: string,
     picture: string,
-    picture_small: string
+    picture_small: string,
+    picture_medium?: string,
+    picture_big?: string
 }
 
 export interface ArtistViewDetails {

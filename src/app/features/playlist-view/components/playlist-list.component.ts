@@ -52,7 +52,7 @@ import { MessageService } from 'primeng/api';
         <div class="workspace-content p-2">
             <p-toast position="top-center" />
             <header class="list-header">
-                <h1 class="n-title">📋 Playlist Database</h1>
+                <h1 class="n-title">Playlist Database</h1>
                 <p-button (click)="showCreateDialog()" label="Create Playlist" />
             </header>
 

@@ -31,7 +31,7 @@ import { Track } from '../../track-view/track.model';
     template: `
         <div class="p-6">  
             <header class="album-header">
-                <img [src]="album?.cover || 'assets/placeholder.png'" [alt]="album?.title" class="album-cover" />
+                <img [src]="album?.cover_medium || 'assets/placeholder.png'" [alt]="album?.title" class="album-cover" />
                 <div>
                     <span class="text-sm font-medium uppercase text-gray-500">Album</span>
                     <h1 class="text-4xl font-bold my-1">{{ album?.title }}</h1>
