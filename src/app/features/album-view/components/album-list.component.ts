@@ -6,8 +6,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { MOCK_ALBUMS } from '../mock-data/albums.mock';
+import { Router } from '@angular/router';
 import { AlbumService } from '../services/albums.service';
 interface Artist {
     id: string,

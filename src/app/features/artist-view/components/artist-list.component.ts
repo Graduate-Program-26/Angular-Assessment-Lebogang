@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Artist } from '../artist.model';
-import { MOCK_ARTISTS } from '../mock-data/artists.mock';
 import { ArtistService } from '../services/artist.service';
 @Component({
     selector: 'artist-list',

@@ -197,7 +197,7 @@ export class TrackList implements OnInit, OnDestroy {
     private confirmationService = inject(ConfirmationService);
 
     tracks = signal<Track[]>([]);
-    playlists = signal(MOCK_PLAYLISTS) || this.playlistStore.playlists;
+    playlists = this.playlistStore.playlists;
     selectedPlaylists: Playlist[] = [];
     filteredTracks = signal<Track[]>([]);
     isLoading = signal(true);

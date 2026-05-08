@@ -1,5 +1,4 @@
 import {Component, signal, inject, OnInit} from '@angular/core'
-import { MOCK_ARTISTS } from '../mock-data/artists.mock'
 import { ArtistService } from '../services/artist.service';
 import { ArtistCard } from './artist-card.component'
 import { Artist } from '../artist.model';
@@ -18,7 +17,7 @@ import { Artist } from '../artist.model';
 export class ArtistGrid  implements OnInit{
     artistService =  inject(ArtistService);
 
-    artists = signal(MOCK_ARTISTS);
+    artists = signal<Artist[]>([]);
 
     async ngOnInit() {
        try {

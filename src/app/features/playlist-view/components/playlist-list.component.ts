@@ -98,7 +98,7 @@ export class PlaylistList implements OnInit {
     playlistService = inject(PlaylistService);
     private messageService = inject(MessageService);
     createPlaylistDialogVisible: boolean = false;
-    playlists =  signal(MOCK_PLAYLISTS);
+   playlists = this.playlistStore.playlists;
 
     playlistTitle : string = '';
 

@@ -63,8 +63,6 @@ export const routes: Routes = [
             albumData: albumResolver
         },
         loadComponent: () => import('./features/album-view/components/album-view.component').then(m => m.AlbumnView) // Accessible globally
-        //loadComponent: () => import('./features/album-view/components/album-list.component').then(m => m.AlbumList) // list of albums for a specific artist
-
     },
     {
         path: 'tracks/:id',
