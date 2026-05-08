@@ -11,19 +11,19 @@ export class PlaylistService {
         return new Promise((resolve, reject) => {
             const request = indexedDB.open('CrescendoDatabase', 1);
 
-            request.onupgradeneeded = (event: any) => {
-                const db = event.target.result;
+            request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
+                const db = request.result;
                 if (!db.objectStoreNames.contains('playlists')) {
                     db.createObjectStore('playlists', { keyPath: 'id' });
                 }
             };
 
-            request.onsuccess = (event: any) => {
-                resolve(event.target.result);
+            request.onsuccess = (event: Event) => {
+                resolve(request.result);
             };
 
-            request.onerror = (event: any) => {
-                reject(event.target.error);
+            request.onerror = (event: Event) => {
+                reject(request.result);
             };
         });
     }

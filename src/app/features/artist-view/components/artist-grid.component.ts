@@ -22,8 +22,7 @@ export class ArtistGrid  implements OnInit{
     async ngOnInit() {
        try {
             const data = await this.artistService.fetchChartArtist();
-  
-            this.artists.set(data)
+            data ? this.artists.set(data): this.artists.set([])
         } catch (error) {
             console.error('Failed to load albums', error);
             // Optionally set back to empty or show a toast

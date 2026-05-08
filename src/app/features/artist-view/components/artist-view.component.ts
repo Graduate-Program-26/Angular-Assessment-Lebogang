@@ -97,7 +97,7 @@ private route = inject(ActivatedRoute);
     artistState = signal<{
         info: Artist | null;
         albums: Album[];
-        tracks: Track[];
+        tracks: Track[] ;
         loading: boolean;
     }>({
         info: null,

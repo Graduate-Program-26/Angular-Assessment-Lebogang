@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
 import { TracksService } from '../services/tracks.service';
-export const trackResolver: ResolveFn<any> = (route, state) => {
+import { Track } from '../track.model';
+export const trackResolver: ResolveFn<Track> = (route, state) => {
   const tracksService =  inject(TracksService)
   const trackId = route.paramMap.get('id')!;
   
@@ -9,7 +10,7 @@ export const trackResolver: ResolveFn<any> = (route, state) => {
   return tracksService.getTrack(trackId);
 };
 
-export const tracksResolver: ResolveFn<any> = (route, state) => {
+export const tracksResolver: ResolveFn<Track[]> = (route, state) => {
   const tracksService =  inject(TracksService)
   const albumId = route.paramMap.get('id')!;
   
@@ -17,7 +18,7 @@ export const tracksResolver: ResolveFn<any> = (route, state) => {
   return tracksService.getTracksForAlbum(albumId);
 };
 
-export const trendingTracksResolver: ResolveFn<any> = (route, state) => {
+export const trendingTracksResolver: ResolveFn<Track[]> = (route, state) => {
   const tracksService =  inject(TracksService);
 
   return tracksService.getChartedTracks();

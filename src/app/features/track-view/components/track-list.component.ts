@@ -221,7 +221,7 @@ export class TrackList implements OnInit, OnDestroy {
             this.filteredTracks.set(this.tracks());
         } else {
             const filtered = this.tracks().filter((track) =>
-                track.title.toLowerCase().includes(query) || track.artist.name.toLowerCase().includes(query)
+                track.title.toLowerCase().includes(query) || track.artist?.name.toLowerCase().includes(query)
             );
             this.filteredTracks.set(filtered);
         }

@@ -18,6 +18,6 @@ export interface Track {
     release_date: string;
     explicit_lyrics: boolean;
     preview: string;
-    artist: ArtistMinimal;
-    album: AlbumMinimal;
+    artist?: ArtistMinimal;
+    album?: AlbumMinimal;
 }
