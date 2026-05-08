@@ -7,7 +7,7 @@ import { TrackCard } from '../../track-view/components/track-card.component';
 import { AlbumService } from '../services/albums.service';
 import { TracksService } from '../../track-view/services/tracks.service';
 import { Track } from '../../track-view/track.model';
-import { MOCK_ALBUMS } from '../mock-data/albums.mock';
+
 @Component({
     selector: 'album-view',
     standalone: true,

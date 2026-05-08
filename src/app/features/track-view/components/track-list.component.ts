@@ -13,12 +13,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Track } from '../track.model';
 import { TrackCard } from './track-card.component';
 import { TracksService } from '../services/tracks.service';
-import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 import { PlaylistService } from '../../playlist-view/services/playlist.service';
 import { PlaylistStore } from '../../playlist-view/state/playlist.store';
 import { Playlist } from '../../playlist-view/playlist.model';
 
-import { MOCK_PLAYLISTS } from '../../playlist-view/mock-data/playlists.mock';
 import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'track-list',

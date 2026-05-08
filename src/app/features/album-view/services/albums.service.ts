@@ -1,5 +1,4 @@
 import { Injectable, inject } from "@angular/core";
-import { MOCK_ALBUMS } from "../mock-data/albums.mock";
 import { HttpClient } from "@angular/common/http";
 import { Album } from "../album.model";
 import { firstValueFrom, forkJoin , map} from "rxjs"; // Converts an observable to a promise by subscribing to the observable, and returning a promise that will resolve as soon as the first value arrives from the observable. The subscription will then be closed.
@@ -32,7 +31,7 @@ export class AlbumService {
             return response.data;
         } catch (error) {
             console.error('Error fetching artist albums:', error);
-            return []; // Fallback to empty array or MOCK_ALBUMS if you prefer
+            return []; 
         }
     }
 

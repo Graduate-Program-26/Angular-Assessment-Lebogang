@@ -8,7 +8,7 @@ import { DataViewModule, DataView } from 'primeng/dataview';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { PlaylistCard } from './playlist-card.component';
-import { MOCK_PLAYLISTS } from '../mock-data/playlists.mock';
+
 import { PlaylistStore } from '../state/playlist.store';
 import { PlaylistService } from '../services/playlist.service';
 import { MessageService } from 'primeng/api';

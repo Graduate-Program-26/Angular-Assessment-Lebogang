@@ -1,7 +1,7 @@
 import { Component, signal, inject } from "@angular/core";
 import { PlaylistCard } from "./playlist-card.component"; 
-import { MOCK_PLAYLISTS } from "../mock-data/playlists.mock";
 import { PlaylistStore } from "../state/playlist.store";
+import { Playlist } from "../playlist.model";
 @Component({
     selector: 'playlist-grid',
     imports: [PlaylistCard],
@@ -16,6 +16,6 @@ import { PlaylistStore } from "../state/playlist.store";
 })
 export class PlaylistGrid {
     playlistStore = inject(PlaylistStore);
-    playlists = this.playlistStore.playlists ||  signal(MOCK_PLAYLISTS);
+    playlists = this.playlistStore.playlists ||  signal<Playlist[]>([]);
 
 }

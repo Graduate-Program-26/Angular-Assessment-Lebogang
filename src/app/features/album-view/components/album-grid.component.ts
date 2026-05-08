@@ -1,5 +1,4 @@
 import {Component, signal, inject, OnInit} from '@angular/core'
-import { MOCK_ALBUMS } from '../mock-data/albums.mock';
 import { AlbumnCard } from './album-card.component';
 import { AlbumService } from '../services/albums.service';
 import { Album } from '../album.model';
@@ -20,8 +19,7 @@ import { Album } from '../album.model';
 export class AlbumsGrid implements OnInit {
    private albumsService = inject(AlbumService);
     
-    // Initialize with an empty array or your MOCK_ALBUMS
-    albums = signal<Album[]>(MOCK_ALBUMS);
+    albums = signal<Album[]>([]);
 
     async ngOnInit() {
         try {
@@ -30,7 +28,7 @@ export class AlbumsGrid implements OnInit {
             this.albums.set(data);
         } catch (error) {
             console.error('Failed to load albums', error);
-            // Optionally set back to empty or show a toast
+            
         }
     }
     

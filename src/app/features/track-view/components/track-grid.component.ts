@@ -1,5 +1,4 @@
 import { Component, inject, signal, OnInit } from '@angular/core'
-import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 import { TrackCard } from './track-card.component';
 import { TracksService } from '../services/tracks.service';
 import { Track } from '../track.model';

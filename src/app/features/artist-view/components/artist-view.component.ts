@@ -14,10 +14,6 @@ import { TracksService } from '../../track-view/services/tracks.service';
 import { ArtistViewDetails } from '../artist.model';
 import { ButtonModule } from 'primeng/button';
 
-
-import { MOCK_ARTISTS } from '../mock-data/artists.mock';
-import { MOCK_TRACKS } from '../../track-view/mock-data/tracks.mock';
-import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
 @Component({
     selector: 'artist-view',
     imports: [AlbumnCard, TrackCard, CommonModule, ButtonModule, RouterLink],

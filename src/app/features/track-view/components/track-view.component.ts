@@ -1,5 +1,3 @@
-
-import { MOCK_TRACKS } from '../mock-data/tracks.mock'
 import { Track } from '../track.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component, PLATFORM_ID, inject, OnInit, OnDestroy } from '@angular/core';
@@ -190,7 +188,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 })
 export class TrackView implements OnInit, OnDestroy {
     private route = inject(ActivatedRoute);
-    trackData: Track | null = MOCK_TRACKS[0];
+    trackData: Track | null = null;
     platformId = inject(PLATFORM_ID);
     private audio!: HTMLAudioElement;
 
