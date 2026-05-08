@@ -14,10 +14,6 @@ import { TracksService } from '../../track-view/services/tracks.service';
 import { ArtistViewDetails } from '../artist.model';
 import { ButtonModule } from 'primeng/button';
 
-
-import { MOCK_ARTISTS } from '../mock-data/artists.mock';
-import { MOCK_TRACKS } from '../../track-view/mock-data/tracks.mock';
-import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
 @Component({
     selector: 'artist-view',
     imports: [AlbumnCard, TrackCard, CommonModule, ButtonModule, RouterLink],
@@ -33,17 +29,17 @@ import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
         <div class="max-w-7xl mx-auto p-6 md:p-8 space-y-10">
             <header class="artist-hero flex flex-col md:flex-row items-center md:items-end gap-6 p-6 md:p-8 rounded-3xl shadow-xl border border-surface-border">
                 <img 
-                    [src]="artist?.picture_small || 'https://placehold.co/150'" 
-                    [alt]="artist?.name" 
+                    [src]="artistState().info?.picture_big || 'https://placehold.co/150'" 
+                    [alt]="artistState().info?.name" 
                     class="w-48 h-48 rounded-full object-cover shadow-2xl border-4 border-background" 
                 />
                 <div class="flex-1 text-center md:text-left">
                     <p class="text-xs font-semibold tracking-wider uppercase text-muted-foreground">Artist</p>
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mt-1 mb-2">{{ artist?.name }}</h1>
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mt-1 mb-2">{{ artistState().info?.name }}</h1>
                     <div class="flex justify-center md:justify-start gap-4 text-sm text-muted-foreground mt-2 font-medium">
-                        <span>{{ artistsAlbums.length }} Albums</span>
+                        <span>{{ artistState().albums.length }} Albums</span>
                         <span>&bull;</span>
-                        <span>{{ artistsTracks.length }} Tracks</span>
+                        <span>{{ artistState().tracks.length}} Tracks</span>
                     </div>
                 </div>
             </header>
@@ -56,7 +52,7 @@ import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
                     </h2>
                     
                     <div class="flex flex-col gap-3 bg-surface-card p-4 rounded-xl border border-surface-border shadow-sm">
-                        @for (track of artistsTracks; track track.id; let i = $index) {
+                        @for (track of artistState().tracks; track track.id; let i = $index) {
                             <div class="flex items-center gap-3 p-2 hover:bg-surface-hover rounded-lg transition-colors duration-200">
                                 <span class="text-sm text-muted-foreground font-semibold w-6 text-right">{{ i + 1 }}</span>
                                  <div class="flex-1" >
@@ -75,7 +71,7 @@ import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
                     </h2>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        @for (album of artistsAlbums; track album.id) {
+                        @for (album of artistState().albums; track album.id) {
                             <div class="bg-surface-card p-4 rounded-xl border border-surface-border shadow-sm hover:shadow-md transition-shadow" [routerLink]="['/albums', album.id]">
                                 <album-card [albumData]="album" />
                             </div>
@@ -93,34 +89,51 @@ import { MOCK_ALBUMS } from '../../album-view/mock-data/albums.mock';
     standalone: true
 })
 export class ArtistView implements OnInit {
-    private route = inject(ActivatedRoute);
-    private router = inject(Router);
-    artistService = inject(ArtistService);
-    albumService = inject(AlbumService);
-    trackService = inject(TracksService);
-    artist: Artist | null = null;
+private route = inject(ActivatedRoute);
+    private albumService = inject(AlbumService);
+    private artistService = inject(ArtistService);
 
-    artistDetails: ArtistViewDetails | null = null
-    artistsAlbums: Album[] = [];
-    artistsTracks: Track[] = []
+   
+    artistState = signal<{
+        info: Artist | null;
+        albums: Album[];
+        tracks: Track[] ;
+        loading: boolean;
+    }>({
+        info: null,
+        albums: [],
+        tracks: [],
+        loading: true
+    });
+
     ngOnInit() {
-        this.route.data.subscribe(({ artistData }) => {
-            this.artist = artistData
-        })
+        this.route.data.subscribe(async ({ artistData }) => {
+            if (!artistData) return;
+
+            this.artistState.update(s => ({ ...s, loading: true, info: artistData }));
+
+            await this.loadAllContent(artistData.id);
+        });
+    }
+
+    private async loadAllContent(artistId: string) {
         try {
-            // Uncomment the actual API service call once your model endpoints are defined
-            // this.artistDetails = await this.artistService.fetchArtistTracksAndAlbums(this.artist.id);
-            // this.artistsAlbums = this.artistDetails?.albums || [];
-            // this.artistsTracks = this.artistDetails?.tracks || [];
+            const [albums, tracks] = await Promise.all([
+                this.albumService.getAlbumsDataFromArtist(artistId),
+                this.artistService.fetchTopSongs(artistId)
+            ]);
+
+            this.artistState.set({
+                info: this.artistState().info,
+                albums,
+                tracks,
+                loading: false
+            });
         } catch (error) {
-            console.error('Failed to load artist tracks and albums:', error);
+            this.artistState.update(s => ({ ...s, loading: false }));
+            console.error("Failed to load artist details", error);
         }
-        // this.artistDetails = await this.artistService.fetchArtistTracksAndAlbums(this.artist?.id)
-        this.artist = MOCK_ARTISTS[0];
-        this.artistsAlbums = MOCK_ALBUMS;
-        this.artistsTracks = MOCK_TRACKS;
     }
 
 
-    
 }

@@ -1,5 +1,3 @@
-
-import { MOCK_TRACKS } from '../mock-data/tracks.mock'
 import { Track } from '../track.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component, PLATFORM_ID, inject, OnInit, OnDestroy } from '@angular/core';
@@ -15,8 +13,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
     styles: `
         .now-playing-container {
             position: fixed;
-            top: 0;
-            left: 0;
+         
             width: 100vw;
             height: 100vh;
             background-size: cover;
@@ -138,7 +135,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 
     <div class="now-playing-content">
         <div class="album-art-wrapper">
-            <img [src]="trackData?.album?.cover_medium" alt="Album Art" class="album-art" />
+            <img [src]="trackData?.album?.cover_xl" alt="Album Art" class="album-art" />
         </div>
 
         <div class="track-info">
@@ -191,7 +188,7 @@ import { durationPipe } from '../../../shared/pipes/duration-format.pipe';
 })
 export class TrackView implements OnInit, OnDestroy {
     private route = inject(ActivatedRoute);
-    trackData: Track | null = MOCK_TRACKS[0];
+    trackData: Track | null = null;
     platformId = inject(PLATFORM_ID);
     private audio!: HTMLAudioElement;
 
@@ -211,10 +208,14 @@ export class TrackView implements OnInit, OnDestroy {
         }
 
         this.route.data.subscribe(({ trackData }) => {
-            this.trackData = trackData || MOCK_TRACKS[1];
+            this.trackData = trackData ;
 
-            const TEST_URL = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // will be replaced with trackData.preview
-            this.loadTrack(TEST_URL);
+            try {
+              this.loadTrack(this.trackData!.preview);
+            }catch(error) {
+
+            }
+           
         });
     }
 

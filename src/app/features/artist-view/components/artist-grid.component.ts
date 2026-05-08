@@ -1,7 +1,7 @@
-import {Component, signal} from '@angular/core'
-import { MOCK_ARTISTS } from '../mock-data/artists.mock'
+import {Component, signal, inject, OnInit} from '@angular/core'
+import { ArtistService } from '../services/artist.service';
 import { ArtistCard } from './artist-card.component'
-
+import { Artist } from '../artist.model';
 @Component({
     selector: 'artist-grid',
     imports: [ArtistCard],
@@ -14,6 +14,18 @@ import { ArtistCard } from './artist-card.component'
         </div>
     `
 })
-export class ArtistGrid {
-    artists = signal(MOCK_ARTISTS);
+export class ArtistGrid  implements OnInit{
+    artistService =  inject(ArtistService);
+
+    artists = signal<Artist[]>([]);
+
+    async ngOnInit() {
+       try {
+            const data = await this.artistService.fetchChartArtist();
+            data ? this.artists.set(data): this.artists.set([])
+        } catch (error) {
+            console.error('Failed to load albums', error);
+            // Optionally set back to empty or show a toast
+        }
+    }
 }

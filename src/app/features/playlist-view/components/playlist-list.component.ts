@@ -8,7 +8,7 @@ import { DataViewModule, DataView } from 'primeng/dataview';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { PlaylistCard } from './playlist-card.component';
-import { MOCK_PLAYLISTS } from '../mock-data/playlists.mock';
+
 import { PlaylistStore } from '../state/playlist.store';
 import { PlaylistService } from '../services/playlist.service';
 import { MessageService } from 'primeng/api';
@@ -49,10 +49,10 @@ import { MessageService } from 'primeng/api';
 
     `,
     template: `
-        <div class="workspace-content">
+        <div class="workspace-content p-2">
             <p-toast position="top-center" />
             <header class="list-header">
-                <h1 class="n-title">📋 Playlist Database</h1>
+                <h1 class="n-title">Playlist Database</h1>
                 <p-button (click)="showCreateDialog()" label="Create Playlist" />
             </header>
 
@@ -98,7 +98,7 @@ export class PlaylistList implements OnInit {
     playlistService = inject(PlaylistService);
     private messageService = inject(MessageService);
     createPlaylistDialogVisible: boolean = false;
-    playlists =  signal(MOCK_PLAYLISTS);
+   playlists = this.playlistStore.playlists;
 
     playlistTitle : string = '';
 

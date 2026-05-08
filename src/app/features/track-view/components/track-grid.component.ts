@@ -1,6 +1,7 @@
-import {Component, signal} from '@angular/core'
-import { MOCK_TRACKS } from '../mock-data/tracks.mock';
+import { Component, inject, signal, OnInit } from '@angular/core'
 import { TrackCard } from './track-card.component';
+import { TracksService } from '../services/tracks.service';
+import { Track } from '../track.model';
 @Component({
     selector: 'tracks-grid',
     imports: [TrackCard],
@@ -13,6 +14,18 @@ import { TrackCard } from './track-card.component';
         </div>
     `
 })
-export class TracksGrid {
-    tracks = signal(MOCK_TRACKS);
+export class TracksGrid implements OnInit {
+    trackService = inject(TracksService);
+
+    tracks = signal<Track[]>([]);
+
+    async ngOnInit() {
+        try {
+            const data = await this.trackService.getChartedTracks()
+
+            this.tracks.set(data)
+        } catch (error) {
+
+        }
+    }
 }

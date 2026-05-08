@@ -58,7 +58,7 @@ import { RouterLink } from '@angular/router';
             <img [src]="artistData().picture_small" [alt]="artistData().name" class="artist-img" />
             <div class="artist-details">
                 <h4>{{ artistData().name }}</h4>
-                <p-button class="artist-link"  [routerLink]="['/artists', artistData().id]">View Profile</p-button>
+                <p-button class="artist-link"  [routerLink]="['/artist', artistData().id]">View Profile</p-button>
             </div>
         </div>
     `

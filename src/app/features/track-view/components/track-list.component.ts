@@ -13,13 +13,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { Track } from '../track.model';
 import { TrackCard } from './track-card.component';
 import { TracksService } from '../services/tracks.service';
-import { MOCK_TRACKS } from '../mock-data/tracks.mock';
 import { PlaylistService } from '../../playlist-view/services/playlist.service';
 import { PlaylistStore } from '../../playlist-view/state/playlist.store';
 import { Playlist } from '../../playlist-view/playlist.model';
 
-import { MOCK_PLAYLISTS } from '../../playlist-view/mock-data/playlists.mock';
-import { sign } from 'crypto';
 import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'track-list',
@@ -57,7 +54,7 @@ import { ActivatedRoute } from '@angular/router';
         .n-title {
             font-size: 1.75rem;
             font-weight: 700;
-            color: #37352f;
+            color: white;
             margin: 0;
         }
 
@@ -92,9 +89,7 @@ import { ActivatedRoute } from '@angular/router';
             transition: background 0.1s;
         }
 
-        .track-row:hover {
-            background: rgba(55, 53, 47, 0.02);
-        }
+
 
         .track-actions {
             display: flex;
@@ -119,8 +114,7 @@ import { ActivatedRoute } from '@angular/router';
 
             <header class="list-header">
                 <div>
-                    <h1 class="n-title">📋 Music Database</h1>
-                    <h2>Album Database</h2>
+                    <h1 class="n-title">Charting Music</h1>
                 </div>
             </header>
 
@@ -197,10 +191,10 @@ export class TrackList implements OnInit, OnDestroy {
     private messageService = inject(MessageService);
     private confirmationService = inject(ConfirmationService);
 
-    tracks = signal<Track[]>(MOCK_TRACKS);
-    playlists = signal(MOCK_PLAYLISTS) || this.playlistStore.playlists;
+    tracks = signal<Track[]>([]);
+    playlists = this.playlistStore.playlists;
     selectedPlaylists: Playlist[] = [];
-    filteredTracks = signal<Track[]>(MOCK_TRACKS);
+    filteredTracks = signal<Track[]>([]);
     isLoading = signal(true);
     searchQuery = '';
 
@@ -208,13 +202,10 @@ export class TrackList implements OnInit, OnDestroy {
     selectedTrackForAction: Track | null = null;
 
     ngOnInit() {
-        setTimeout(() => {
-            // tracks = this.tracksService.getTracksForAlbum(id) // @TODO to fetch from route resolver
-            this.isLoading.set(false);
-        }, 1200);
         this.route.data.subscribe(({ trackData }) => {
-            this.tracks = trackData || MOCK_TRACKS;
-
+            this.tracks.set(trackData)
+            this.filteredTracks.set(trackData)
+            this.isLoading.set(false);
         });
         this.playlistStore.loadPlaylists();
     }
@@ -230,7 +221,7 @@ export class TrackList implements OnInit, OnDestroy {
             this.filteredTracks.set(this.tracks());
         } else {
             const filtered = this.tracks().filter((track) =>
-                track.title.toLowerCase().includes(query) || track.artist.name.toLowerCase().includes(query)
+                track.title.toLowerCase().includes(query) || track.artist?.name.toLowerCase().includes(query)
             );
             this.filteredTracks.set(filtered);
         }

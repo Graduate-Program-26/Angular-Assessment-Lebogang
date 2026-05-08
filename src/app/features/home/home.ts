@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-home',
-  imports: [TopHeader, SidebarComponent, PlaylistGrid, ArtistGrid, AlbumsGrid, TracksGrid, RouterLink],
+  imports: [ PlaylistGrid, ArtistGrid, AlbumsGrid, TracksGrid, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

@@ -6,8 +6,8 @@ import { DataViewModule } from 'primeng/dataview';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { MOCK_ALBUMS } from '../mock-data/albums.mock';
+import { Router } from '@angular/router';
+import { AlbumService } from '../services/albums.service';
 interface Artist {
     id: string,
     name: string,
@@ -21,7 +21,7 @@ interface Artist {
     template: `
      <div class="card p-4">
             <header class="flex justify-content-between align-items-center mb-4">
-                <h1 class="text-3xl font-bold">{{ artist().name }} Albums</h1>
+                <h1 class="text-3xl font-bold">Charting Albums</h1>
             </header>
 
             <div>
@@ -78,32 +78,23 @@ interface Artist {
 export class AlbumList implements OnInit {
     private route = inject(ActivatedRoute);
     private router = inject(Router);
+    albumsService = inject(AlbumService);
+
     options = ['list', 'grid'];
     layout: 'list' | 'grid' = 'list';
     albumData = signal<Album[]>([]);
-    artist = signal<ArtistSummary>({
-        name: '',
-        id: '',
-        picture_small: ''
-    });
+
 
 
     ngOnInit(): void {
         this.route.data.subscribe(({ albumData }) => {
-            /*
             this.albumData.set(albumData);
-            if (albumData.length > 0 && albumData[0].artist) {
-                this.artist.set(albumData[0].artist);
-            }
-                */
-            this.albumData.set(MOCK_ALBUMS);
-             this.artist.set(MOCK_ALBUMS[0].artist)
         })
     }
 
     viewAlbum(id: string) {
         if (id !== " ") {
-            this.router.navigate(['..', 'artist', this.artist().id, 'albums', id], { relativeTo: this.route.parent });// @TODO: validate that this route goes to the right place relative to the route
+            this.router.navigate(['/albums', id], { relativeTo: this.route.parent });
         }
     }
 }

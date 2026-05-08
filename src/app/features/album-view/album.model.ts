@@ -1,3 +1,5 @@
+import { Track } from "../track-view/track.model";
+
 export interface ArtistSummary {
     id: string;
     name: string;
@@ -15,4 +17,8 @@ export interface Album {
     duration: number;
     label?: string;
     artist: ArtistSummary;
+}
+
+export interface EnrichedAlbum extends Album {
+  tracks: Track[];
 }
