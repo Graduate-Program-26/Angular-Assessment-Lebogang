@@ -7,8 +7,9 @@ import { MenuItem } from "primeng/api";
 import { FormsModule } from "@angular/forms";
 import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
 import { BreadcrumbService } from "../../directives/breadCrumb";
-import { filter } from "rxjs";
+import { filter, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil, of } from "rxjs";
 import { NavigationEnd } from "@angular/router";
+import { SearchService } from "../../services/search.service";
 @Component({
     selector: 'header-bar',
     standalone: true,
@@ -131,15 +132,17 @@ export class TopHeader implements OnInit {
     private activatedRoute = inject(ActivatedRoute);
     private cdr = inject(ChangeDetectorRef);
     private zone = inject(NgZone);
+    private searchSubject = new Subject<string>();
     breadCrumb = inject(BreadcrumbService);
+    searchService = inject(SearchService);
 
-    showCommandPaletteDialog : boolean = false;
+    showCommandPaletteDialog: boolean = false;
 
     breadCrumbItems: MenuItem[] = [];
     home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 
-    searchSugesstions: string[] = [];
-    selectedSearchItem: unknown;
+    searchSugesstions: any[] = [];
+    selectedSearchItem: any;
 
 
     ngOnInit() {
@@ -148,7 +151,7 @@ export class TopHeader implements OnInit {
             routerLink: ['/home']
         };
 
-       this.router.events.pipe(
+        this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe(() => {
 
@@ -156,19 +159,44 @@ export class TopHeader implements OnInit {
         });
     }
 
+    constructor() {
+        this.searchSubject.pipe(
+            debounceTime(300),          
+            distinctUntilChanged(),     // Only if query changed
+            switchMap(query => {
+                if (query.length < 2) return of([]);
+
+                return this.searchService.searchAll(query);
+            }),
+            //  takeUntilDestroyed()        // Auto-cleanup on component destroy
+        ).subscribe((results: any) => {
+            this.searchSugesstions = results;
+            this.cdr.markForCheck();    // Ensure UI updates
+        });
+    }
+
     search(evemt: AutoCompleteCompleteEvent) {
         const query = evemt.query.toLowerCase();
 
-
-        //debounce fetch from music api
-        this.searchSugesstions = [
-            'some song',
-            'some artist etc'
-        ].filter(item => item.toLowerCase().includes(query))
+        if (query.trim().length > 2) {
+            this.searchSubject.next(query);
+        }
     }
 
-    onSelectSugesstions(evemt: unknown) {
-        // if suggesstion is clciked, navigate to that route
+    onSelectSugesstions(event: any) {
+        const item = event.value;
+        
+        this.showCommandPaletteDialog = false;
+
+        if (item.type === 'artist') {
+            this.router.navigate(['/artists', item.id]);
+        } else if (item.type === 'album') {
+            this.router.navigate(['/albums', item.id]);
+        } else if (item.type === 'track') {
+            this.router.navigate(['/tracks', item.id]);
+        } 
+
+        this.selectedSearchItem = null;
     }
 
 
