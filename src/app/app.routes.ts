@@ -96,7 +96,7 @@ export const routes: Routes = [
         path: 'playlists',
         canActivateChild: [authGuard],
         data: { breadcrumb: 'Playlists' },
-        resolve: playlistResolver,
+      
         children: [
             {
                 path: '',
@@ -105,6 +105,7 @@ export const routes: Routes = [
             {
                 path: ':id', // Renders a specific playlist
                 data: { breadcrumb: 'Playlist' },
+                  resolve: playlistResolver,
                 loadComponent: () => import('./features/playlist-view/components/playlist-view.component').then(m => m.PlaylistView)
             }
         ]

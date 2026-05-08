@@ -28,23 +28,27 @@ export class PlaylistService {
         });
     }
 
-    async loadPlaylists() {
-        const db = await this.openDB();
-        return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['playlists'], 'readonly');
-            const store = transaction.objectStore('playlists');
-            const request = store.getAll();
+    async loadPlaylists() : Promise<Playlist[]> {
+         const db = await this.openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['playlists'], 'readonly');
+        const store = transaction.objectStore('playlists');
+        const request = store.getAll();
 
-            request.onsuccess = () => resolve(request.result || []);
-            request.onerror = () => reject(request.error);
-        });
+        request.onsuccess = () => {
+            const playlists = request.result || [];
+            this.playlists.set(playlists); // ← keep signal in sync too
+            resolve(playlists);
+        };
+        request.onerror = () => reject(request.error);
+    });
     }
 
     async getPlaylists() {
         return this.playlists();
     }
 
-    async addPlaylist(title: string) {
+    async addPlaylist(title: string): Promise<Playlist> {
         const newPlaylist: Playlist = {
             id: crypto.randomUUID(),
             title: title,
@@ -52,7 +56,25 @@ export class PlaylistService {
             duration: 0
         }
 
-        return newPlaylist;
+        const db = await this.openDB();
+
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(['playlists'], 'readwrite');
+            const store = transaction.objectStore('playlists');
+
+            const request = store.add(newPlaylist);
+
+            request.onsuccess = () => {
+                
+                this.playlists.update(current => [...current, newPlaylist]);
+                resolve(newPlaylist);
+            };
+
+            request.onerror = () => {
+                console.error('Failed to save playlist to IndexedDB');
+                reject(request.error);
+            };
+        });
     }
 
     async addTrackToPlaylist(playlistId: string, track: Track): Promise<void> {
@@ -69,7 +91,7 @@ export class PlaylistService {
                     if (!exists) {
                         playlist.tracks.push(track);
                         playlist.duration = playlist.tracks.reduce((acc, curr) => acc + parseInt(String(curr.duration || '0'), 10), 0);
-                        
+
                         const updateRequest = store.put(playlist);
                         updateRequest.onsuccess = () => resolve();
                         updateRequest.onerror = (e) => reject(e);
@@ -84,7 +106,7 @@ export class PlaylistService {
         });
     }
 
-    async removeTrackFromPlaylist(playlistId: string, trackId: string) : Promise<void> {
+    async removeTrackFromPlaylist(playlistId: string, trackId: string): Promise<void> {
         const db = await this.openDB();
 
         return new Promise((resolve, reject) => {
@@ -110,7 +132,7 @@ export class PlaylistService {
                 if (playlist) {
                     const updatedRecord = { ...playlist, ...updatedData };
                     const updateRequest = store.put(updatedRecord);
-                    
+
                     updateRequest.onsuccess = () => resolve();
                     updateRequest.onerror = (e) => reject(e);
                 } else {
