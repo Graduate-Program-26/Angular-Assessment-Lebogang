@@ -33,12 +33,12 @@ import { RouterLink } from '@angular/router';
 
         .col-artist {
             flex: 1.5;
-            color: rgba(55, 53, 47, 0.7);
+            color: white;
         }
 
         .col-album {
             flex: 1.5;
-            color: rgba(55, 53, 47, 0.5);
+            color: white;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -47,7 +47,7 @@ import { RouterLink } from '@angular/router';
         .col-duration {
             flex: 0.5;
             text-align: right;
-            color: rgba(55, 53, 47, 0.5);
+            color: white
         }
 
         .track-thumb {

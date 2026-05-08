@@ -69,7 +69,7 @@ import { ActivatedRoute } from '@angular/router';
             border: 1px solid rgba(55, 53, 47, 0.08);
             border-radius: 6px;
             padding: 0.5rem 0.75rem;
-            color: #37352f;
+            color: white;
         }
 
         .track-list {
@@ -84,7 +84,7 @@ import { ActivatedRoute } from '@angular/router';
             align-items: center;
             padding: 0.5rem 0.75rem;
             border-radius: 6px;
-            background: #ffffff;
+            background: purple;
             border: 1px solid rgba(55, 53, 47, 0.08);
             transition: background 0.1s;
         }
