@@ -33,12 +33,12 @@ import { RouterLink } from '@angular/router';
 
         .col-artist {
             flex: 1.5;
-            color: rgba(55, 53, 47, 0.7);
+            color: white;
         }
 
         .col-album {
             flex: 1.5;
-            color: rgba(55, 53, 47, 0.5);
+            color: white;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -47,7 +47,7 @@ import { RouterLink } from '@angular/router';
         .col-duration {
             flex: 0.5;
             text-align: right;
-            color: rgba(55, 53, 47, 0.5);
+            color: white
         }
 
         .track-thumb {
@@ -71,14 +71,14 @@ import { RouterLink } from '@angular/router';
     template: `
         <div class="database-row" [routerLink]="['/tracks', trackData().id]">
             <div class="col-title">
-                <img [src]="trackData().album.cover_medium" [alt]="trackData().title" class="track-thumb" />
+                <img [src]="trackData().album?.cover_medium" [alt]="trackData().title" class="track-thumb" />
                 <span class="track-name">{{ trackData().title }}</span>
                 @if (trackData().explicit_lyrics) {
                     <span class="explicit-tag">E</span>
                 }
             </div>
-            <div class="col-artist">{{ trackData().artist.name }}</div>
-            <div class="col-album">{{ trackData().album.title }}</div>
+            <div class="col-artist">{{ trackData().artist?.name }}</div>
+            <div class="col-album">{{ trackData().album?.title }}</div>
             <div class="col-duration">{{ trackData().duration  | durationFormat}}</div>
         </div>
     `

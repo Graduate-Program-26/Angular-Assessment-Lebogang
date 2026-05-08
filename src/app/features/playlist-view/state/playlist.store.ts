@@ -18,13 +18,13 @@ export const PlaylistStore = signalStore(
     withState(initialState),
     withMethods((store, storageService = inject(PlaylistService)) => ({
         async loadPlaylists() {
-            patchState(store, { isLoading: true });
-            try {
-                const data = await storageService.getPlaylists(); // Fetch from IDB
-                patchState(store, { playlists: data, isLoading: false });
-            } catch (error) {
-                patchState(store, { error: 'Failed to load playlists', isLoading: false });
-            }
+                patchState(store, { isLoading: true });
+    try {
+        const data = await storageService.loadPlaylists(); // ← was getPlaylists()
+        patchState(store, { playlists: data, isLoading: false });
+    } catch (error) {
+        patchState(store, { error: 'Failed to load playlists', isLoading: false });
+    }
         },
 
         async addPlaylist(title: string) {

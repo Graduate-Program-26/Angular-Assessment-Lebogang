@@ -10,10 +10,15 @@ Crescendo is a modern web application built for music enthusiasts to explore art
 
 ## **📸 Screenshots**
 
-| Music Workspace | Artist View | Mobile Optimized |
-| --- | --- | --- |
-|  |  |  |
+## 📸 Gallery
 
+| Album view |Home View |  Charts view |
+| :---: | :---: | :---: |
+| <img src="public/screenshots/1.png" width="300" /> | <img src="public/screenshots/2.png" width="300" /> | <img src="public/screenshots/3.png" width="200" /> |
+| **Charts View** | **Charts view** | **Search Pallette** |
+| <img src="public/screenshots/4.png" width="300" /> | <img src="public/screenshots/5.png" width="300" /> | <img src="public/screenshots/6.png" width="300" /> |
+| **Playlisy View** | **Track Playing view** | Artist View|
+| <img src="public/screenshots/7.png" width="300" /> | <img src="public/screenshots/8.png" width="300" /> | <img src="public/screenshots/9.png" width="300" /> |
 ---
 
 ## **🛠️ Tech Stack & Architecture**

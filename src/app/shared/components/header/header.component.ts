@@ -7,12 +7,13 @@ import { MenuItem } from "primeng/api";
 import { FormsModule } from "@angular/forms";
 import { AutoCompleteCompleteEvent } from "primeng/autocomplete";
 import { BreadcrumbService } from "../../directives/breadCrumb";
-import { filter } from "rxjs";
+import { filter, Subject, debounceTime, distinctUntilChanged, switchMap, takeUntil, of } from "rxjs";
 import { NavigationEnd } from "@angular/router";
-@Component({
+import { SearchService } from "../../services/search.service";
+import { TagModule } from 'primeng/tag'; @Component({
     selector: 'header-bar',
     standalone: true,
-    imports: [AutoCompleteModule, BreadcrumbModule, FormsModule, RouterModule, DialogModule],
+    imports: [AutoCompleteModule, BreadcrumbModule, FormsModule, RouterModule, DialogModule, TagModule],
     styles: `
     .header {
             display: flex;
@@ -56,29 +57,15 @@ import { NavigationEnd } from "@angular/router";
             color: rgba(55, 53, 47, 0.4);
         }
 
-        .notion-search {
-            width: 280px;
+        .search {
+            width: 250px;
         }
 
         .p-autocomplete {
             width: 100%;
         }
 
-        .p-autocomplete-input {
-            width: 100% !important;
-            border-radius: 6px !important;
-            border: 1px solid #e0e0e0 !important;
-            background: #fbfbfa !important;
-            padding: 0.375rem 0.75rem !important;
-            font-size: 0.875rem !important;
-            color: #37352f !important;
-            transition: all 0.2s ease !important;
-        }
 
-        .p-autocomplete-input:focus {
-            border-color: #37352f !important;
-            box-shadow: 0 0 0 2px rgba(55, 53, 47, 0.1) !important;
-        }
     
     `,
     template: `
@@ -90,11 +77,28 @@ import { NavigationEnd } from "@angular/router";
 
         
             <div class="search">
-                <p-autocomplete [(ngModel)]="selectedSearchItem" 
+                <p-autocomplete 
+                    [(ngModel)]="selectedSearchItem" 
                     [suggestions]="searchSugesstions" 
                     (completeMethod)="search($event)" 
-                    (onSelect)="onSelectSugesstions($event)"
-                    placeholder="Search Workspace (⌘+K)" />
+                    [scrollHeight]="'450px'" 
+                    [appendTo]="'body'"
+                    class="custom-search"
+                    placeholder="Search Workspace (⌘+K)">
+                    <ng-template let-item #item>
+                        <div class="flex align-items-center justify-content-between w-full py-2">
+                            <div class="flex align-items-center gap-2">
+                                @if (item.image) {
+                                    <img [src]="item.image" style="width: 24px; height: 24px; border-radius: 4px;" />
+                                } @else {
+                                    <i [className]="'pi ' + item.icon"></i>
+                                }
+                                <span class="font-medium">{{ item.label }}</span>
+                            </div>
+                            <p-tag [value]="item.category" [severity]="getSeverity(item.type)"></p-tag>
+                        </div>
+                    </ng-template>
+                </p-autocomplete>
             </div>
 
 
@@ -131,15 +135,17 @@ export class TopHeader implements OnInit {
     private activatedRoute = inject(ActivatedRoute);
     private cdr = inject(ChangeDetectorRef);
     private zone = inject(NgZone);
+    private searchSubject = new Subject<string>();
     breadCrumb = inject(BreadcrumbService);
+    searchService = inject(SearchService);
 
-    showCommandPaletteDialog : boolean = false;
+    showCommandPaletteDialog: boolean = false;
 
     breadCrumbItems: MenuItem[] = [];
     home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 
-    searchSugesstions: string[] = [];
-    selectedSearchItem: unknown;
+    searchSugesstions: any[] = [];
+    selectedSearchItem: any;
 
 
     ngOnInit() {
@@ -148,7 +154,7 @@ export class TopHeader implements OnInit {
             routerLink: ['/home']
         };
 
-       this.router.events.pipe(
+        this.router.events.pipe(
             filter(event => event instanceof NavigationEnd)
         ).subscribe(() => {
 
@@ -156,19 +162,44 @@ export class TopHeader implements OnInit {
         });
     }
 
+    constructor() {
+        this.searchSubject.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),     // Only if query changed
+            switchMap(query => {
+                if (query.length < 2) return of([]);
+
+                return this.searchService.searchAll(query);
+            }),
+            //  takeUntilDestroyed()        // Auto-cleanup on component destroy
+        ).subscribe((results: any) => {
+            this.searchSugesstions = results;
+            this.cdr.markForCheck();    // Ensure UI updates
+        });
+    }
+
     search(evemt: AutoCompleteCompleteEvent) {
         const query = evemt.query.toLowerCase();
 
-
-        //debounce fetch from music api
-        this.searchSugesstions = [
-            'some song',
-            'some artist etc'
-        ].filter(item => item.toLowerCase().includes(query))
+        if (query.trim().length > 2) {
+            this.searchSubject.next(query);
+        }
     }
 
-    onSelectSugesstions(evemt: unknown) {
-        // if suggesstion is clciked, navigate to that route
+    onSelectSugesstions(event: any) {
+        const item = event.value;
+
+        this.showCommandPaletteDialog = false;
+
+        if (item.type === 'artist') {
+            this.router.navigate(['/artists', item.id]);
+        } else if (item.type === 'album') {
+            this.router.navigate(['/albums', item.id]);
+        } else if (item.type === 'track') {
+            this.router.navigate(['/tracks', item.id]);
+        }
+
+        this.selectedSearchItem = null;
     }
 
 
@@ -197,4 +228,16 @@ export class TopHeader implements OnInit {
         }
     }
 
+    getSeverity(type: string): 'success' | 'info' | 'warn' | 'danger' | 'secondary' {
+        switch (type.toLowerCase()) {
+            case 'artist':
+                return 'success';   
+            case 'album':
+                return 'info';   
+            case 'track':
+                return 'warn';   
+            default:
+                return 'secondary'; 
+        }
+    }
 }   
