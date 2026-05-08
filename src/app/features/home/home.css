@@ -1,0 +1,85 @@
+.workspace {
+    display: flex;
+    height: 100vh;
+    background-color: #ffffff;
+    color: #37352f;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.n-main {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #ffffff;
+    padding: 2rem 4rem;
+}
+
+.page-title-block {
+    margin-bottom: 2.5rem;
+}
+
+.page-title-block h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.page-title-block .subtitle {
+    color: rgba(55, 53, 47, 0.5);
+    font-size: 0.95rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.block-card {
+    background: #ffffff;
+    border: 1px solid rgba(55, 53, 47, 0.08);
+    border-radius: 6px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(55, 53, 47, 0.08);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.block-card:hover {
+    border-color: rgba(55, 53, 47, 0.2);
+    box-shadow: 0 2px 8px rgba(55, 53, 47, 0.06);
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.n-btn {
+    background: transparent;
+    border: none;
+    color: rgba(55, 53, 47, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.n-btn:hover {
+    background-color: rgba(55, 53, 47, 0.06);
+    color: #37352f;
+}
+
+.n-btn i {
+    font-size: 0.7rem;
+}
