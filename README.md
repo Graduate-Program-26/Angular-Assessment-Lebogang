@@ -8,9 +8,7 @@ Crescendo is a modern web application built for music enthusiasts to explore art
 
 ---
 
-## **📸 Screenshots**
-
-## 📸 Gallery
+## **Screenshots**
 
 | Album view |Home View |  Charts view |
 | :---: | :---: | :---: |
@@ -21,7 +19,7 @@ Crescendo is a modern web application built for music enthusiasts to explore art
 | <img src="public/screenshots/7.png" width="300" /> | <img src="public/screenshots/8.png" width="300" /> | <img src="public/screenshots/9.png" width="300" /> |
 ---
 
-## **🛠️ Tech Stack & Architecture**
+## **Tech Stack & Architecture**
 
 ### **Core Framework**
 
@@ -68,15 +66,3 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 
 ---
-
-## **🔒 Security & Performance**
-
-* **Strict Typing**: Zero `any` policy across the codebase for better maintainability.
-* **Atomic Updates**: Components use parallel fetching (`Promise.all`) and Signal updates to prevent UI flickering.
-* **Safe Navigation**: Route guards and resolvers ensure that components never initialize without the data they need.
-
----
-
-### **License**
-
-This project is licensed under the MIT License.
